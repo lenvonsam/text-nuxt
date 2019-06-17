@@ -41,7 +41,6 @@ module.exports = {
    */
   plugins: [
     { src: '@/plugins/element-ui', ssr: false },
-    { src: '@/plugins/jsplumb', ssr: false },
     '@/plugins/mixins',
     { src: '@/plugins/editTable', ssr: false }
   ],
