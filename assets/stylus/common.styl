@@ -1,0 +1,117 @@
+@charset "utf-8"
+@require "./basic"
+
+.ptb-xs
+  padding-top 5px
+  padding-bottom 5px
+.mtb-xs
+  margin-top 5px
+  margin-bottom 5px
+// 293136
+.bg-container
+  background #f4f7fa
+.server-container
+  background #f4f7fa
+  // padding-left 160px
+  min-height: 100vh
+  display: flex
+  overflow hidden
+  // flex-direction: column
+  .sidebar
+    &.collapse
+      flex 0 0 64px
+      transition: all 0.8s
+    flex 0 0 180px;
+    overflow: hidden;
+    position relative
+    background #293136
+    .side-wrap
+      position: absolute
+      top 0
+      left 0
+      right 0
+      bottom 0
+      overflow-x hidden
+      overflow-y auto
+      .menu
+        .el-menu
+          border-right 0px !important
+        .ant-menu-dark
+          background: #293136 !important
+          .ant-menu-submenu.ant-menu-submenu-inline,
+          .ant-menu-inline.ant-menu-sub
+          // .ant-menu-item
+            background: #2b333e !important
+          .ant-menu-inline.ant-menu-sub
+            box-shadow: none !important
+  .right-part
+    flex 1
+    display: flex
+    flex-direction: column
+    .topbar
+      background: #fff
+      padding-bottom 0px
+      box-sizing border-box
+      flex 0 0 auto
+      // flex 0 0 100px
+      .top-tab
+        height 58px
+        .el-tabs__nav-wrap::after
+          height 1px
+        .el-tabs__nav
+          padding-left 15px
+          .el-tabs__active-bar
+            margin-left 13px
+        .ant-tabs-bar
+          .ant-tabs-tab-active,
+          .ant-tabs-tab:hover
+            color #4e86f5 !important
+          .ant-tabs-ink-bar
+            width 34px !important
+            margin-left 24px
+      .bottom-tab
+        .el-tabs__header
+          margin-bottom 0px !important
+        .ant-tabs-bar
+          margin-bottom  0px !important
+          .ant-tabs-tab-active,
+          .ant-tabs-tab:hover
+            color #4e86f5 !important
+          .ant-tabs-ink-bar
+            display none !important
+    .content
+      flex 1
+      margin 0px
+      padding 0px
+      box-sizing border-box
+      font-size: 14px
+      position: relative
+      overflow: hidden
+      .content-scroll
+        position: absolute
+        z-index: 2001
+        top 0 
+        right 0
+        left 0
+        bottom 0
+        overflow: auto
+      .box
+        padding 15px
+
+.full-height{
+  height: 100vh  
+}
+.ant-table-small > .ant-table-content > .ant-table-header > table > .ant-table-thead > tr > th, .ant-table-small > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th, .ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-header > table > .ant-table-thead > tr > th, .ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-body > table > .ant-table-thead > tr > th, .ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-header > table > .ant-table-thead > tr > th, .ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-header > table > .ant-table-thead > tr > th, .ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th, .ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th, .ant-table-small > .ant-table-content > .ant-table-header > table > .ant-table-tbody > tr > td, .ant-table-small > .ant-table-content > .ant-table-body > table > .ant-table-tbody > tr > td, .ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-header > table > .ant-table-tbody > tr > td, .ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-body > table > .ant-table-tbody > tr > td, .ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-header > table > .ant-table-tbody > tr > td, .ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-header > table > .ant-table-tbody > tr > td, .ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-tbody > tr > td, .ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-tbody > tr > td{
+  box-sizing: content-box!important  
+}
+.ant-calendar-picker{
+  width: 100%
+}
+.ant-layout-sider-zero-width-trigger{
+  right: -8px!important;
+  width: 8px!important;
+}
+.el-date-editor .el-input__inner{
+  box-sizing: border-box
+  padding-right: 15px
+}
