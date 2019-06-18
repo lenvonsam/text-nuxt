@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/crmclient/!svn/ver/183/dev/pages/callCenter/sms
+END
+recipient.vue
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/crmclient/!svn/ver/168/dev/pages/callCenter/sms/recipient.vue
+END
+sendRec.vue
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/crmclient/!svn/ver/183/dev/pages/callCenter/sms/sendRec.vue
+END
+index.vue
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/crmclient/!svn/ver/92/dev/pages/callCenter/sms/index.vue
+END
+sendDetailList.vue
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/crmclient/!svn/ver/137/dev/pages/callCenter/sms/sendDetailList.vue
+END
+templateManagement.vue
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/crmclient/!svn/ver/122/dev/pages/callCenter/sms/templateManagement.vue
+END
+sendAndReceiveRec.vue
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/crmclient/!svn/ver/183/dev/pages/callCenter/sms/sendAndReceiveRec.vue
+END
+recipientAdd.vue
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/crmclient/!svn/ver/168/dev/pages/callCenter/sms/recipientAdd.vue
+END
+receiveRec.vue
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/crmclient/!svn/ver/136/dev/pages/callCenter/sms/receiveRec.vue
+END

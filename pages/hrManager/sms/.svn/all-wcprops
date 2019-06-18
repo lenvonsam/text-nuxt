@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/crmclient/!svn/ver/162/dev/pages/hrManager/sms
+END
+index.vue
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/crmclient/!svn/ver/121/dev/pages/hrManager/sms/index.vue
+END
+templateManagement.vue
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/crmclient/!svn/ver/120/dev/pages/hrManager/sms/templateManagement.vue
+END
+sendAndReceiveRec.vue
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/crmclient/!svn/ver/162/dev/pages/hrManager/sms/sendAndReceiveRec.vue
+END
+recipientAdd.vue
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/crmclient/!svn/ver/124/dev/pages/hrManager/sms/recipientAdd.vue
+END
+addressBook.vue
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/crmclient/!svn/ver/124/dev/pages/hrManager/sms/addressBook.vue
+END

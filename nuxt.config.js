@@ -36,7 +36,9 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    { src: '@/plugins/element-ui', ssr: false }
+    { src: '@/plugins/element-ui', ssr: false },    
+    '@/plugins/mixins',
+    { src: '@/plugins/editTable', ssr: false }
   ],
 
   /*

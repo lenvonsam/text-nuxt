@@ -1,3 +1,3 @@
 export default function({ store, route, redirect }) {
-    redirect('/')
+    redirect('/basics/InstitutionalSet/organization')
 }
