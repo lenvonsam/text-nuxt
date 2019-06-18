@@ -62,31 +62,32 @@ erplr-panel(:right-padding="false")
         ],
         editForm: [
           {lbl: '姓名', prop: 'employeeName', placeholder: '请输入部门', rules: true},
-          {lbl: '机构', prop: 'orgName', placeholder: '请输入模板名称', rules: true},
-          {lbl: '部门', prop: 'deptName'},
-          {lbl: '职位', prop: 'employeeJob'},
-          {lbl: '类别', prop: 'employeeClass'},
-          {lbl: '性别', prop: 'employeeSex', type:'select', valProp: 'label', list: []},
-          {lbl: '学历', prop: 'employeeDegree', type: 'select', valProp: 'label', list: []},
+          {lbl: '机构', prop: 'orgCode', rules: true, type: 'select', filterable: true, labelProp: 'orgName', valProp: 'orgCode', list: [], placeholder: '请选择机构'},
+          {lbl: '部门', prop: 'deptCode', rules: true, type: 'select', filterable: true, labelProp: 'deptName', valProp: 'deptCode', list: [], placeholder: '请选择部门'},
+          {lbl: '职位', prop: 'employeeJob', placeholder: ''},
+          {lbl: '类别', prop: 'employeeClass', placeholder: ''},
+          {lbl: '性别', prop: 'employeeSex', type:'select', valProp: 'label', list: [], placeholder: '请选择性别'},
+          {lbl: '学历', prop: 'employeeDegree', type: 'select', valProp: 'label', list: [], placeholder: '请选择学历'},
           {lbl: '专业', prop: 'employeeSpecialty'},
-          {lbl: '身份证号码', prop: 'employeeIdcard'},
-          {lbl: '地址', prop: 'employeeAddr'},
-          {lbl: '电话', prop: 'employeePhone'},
-          {lbl: '手机', prop: 'employeeMobile'},
-          {lbl: '邮箱', prop: 'employeeEmail'},
-          {lbl: '职称', prop: 'employeeTechnical'},
-          {lbl: '民族', prop: 'employeeNation'},
-          {lbl: '政治面貌', prop: 'employeeParty'},
-          {lbl: '籍贯', prop: 'employeeNative'},
-          {lbl: '婚姻', prop: 'employeeMarriage', type: 'select', list: [], valProp: 'label'},
-          {lbl: '出生日期', prop: 'employeeBirthday', type: 'date'},
-          {lbl: '进公司时间', prop: 'employeeJoindate', type: 'date'},
-          {lbl: '工作组', prop: 'workgroupName'},
-          {lbl: '备注', prop: 'employeeRemark'}
+          {lbl: '身份证号码', prop: 'employeeIdcard', placeholder: '请输入身份证号码'},
+          {lbl: '地址', prop: 'employeeAddr', placeholder: '请输入地址'},
+          {lbl: '电话', prop: 'employeePhone', placeholder: '请输入电话'},
+          {lbl: '手机', prop: 'employeeMobile', placeholder: '请输入手机号码'},
+          {lbl: '邮箱', prop: 'employeeEmail', placeholder: '请输入邮箱'},
+          {lbl: '职称', prop: 'employeeTechnical', placeholder: ''},
+          {lbl: '民族', prop: 'employeeNation', placeholder: ''},
+          {lbl: '政治面貌', prop: 'employeeParty', placeholder: ''},
+          {lbl: '籍贯', prop: 'employeeNative', placeholder: ''},
+          {lbl: '婚姻', prop: 'employeeMarriage', type: 'select', list: [], valProp: 'label', placeholder: ''},
+          {lbl: '出生日期', prop: 'employeeBirthday', type: 'date', placeholder: ''},
+          {lbl: '进公司时间', prop: 'employeeJoindate', type: 'date', placeholder: ''},
+          {lbl: '工作组', prop: 'workgroupName', placeholder: ''},
+          {lbl: '备注', prop: 'employeeRemark', placeholder: ''}
         ],
         rules: {
           employeeName: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-          orgName: [{ required: true, message: '请输入机构', trigger: 'blur' }]
+          orgCode: [{ required: true, message: '请选择机构', trigger: 'change' }],
+          deptCode: [{ required: true, message: '请选择部门', trigger: 'change' }]
         },             
         searchFormItems: [
           {lbl: '姓名', prop: 'employeeName', val: '', placeholder:'请输入姓名'},
@@ -155,15 +156,12 @@ erplr-panel(:right-padding="false")
         sexOpts: state => state.sexOpts,
         maritalOpts: state => state.maritalOpts
       })
-    },
-    created () {
-      // this.getMsgTemplateGroup()    
+    },    
+    mounted () {
       this.editForm[5].list = this.sexOpts
       this.editForm[6].list = this.eduOpts
       this.editForm[17].list = this.maritalOpts
       this.copySmsTemplate = JSON.parse(JSON.stringify(this.smsTemplate))
-    },
-    mounted () {
       this.$nextTick(()=>{
         this.queryObject = {
           currentPage: this.currentPage,
@@ -186,6 +184,8 @@ erplr-panel(:right-padding="false")
           case 'add':
             this.dialogTitle = '新增员工'
             this.dialogShow = true
+            if (this.editForm[2].list.length === 0) this.getDpt()
+            if (this.editForm[1].list.length === 0) this.getOrg()
             break
           case 'edit':
             if (this.tableSelect.length < 1) {
@@ -196,6 +196,8 @@ erplr-panel(:right-padding="false")
               this.$message.error('只能选择一条数据编辑')
               return false
             }
+            if (this.editForm[2].list.length === 0) this.getDpt()
+            if (this.editForm[1].list.length === 0) this.getOrg()
             this.smsTemplate = JSON.parse(JSON.stringify(this.tableSelect[0]))
             this.rowEdit()
             break
@@ -227,8 +229,8 @@ erplr-panel(:right-padding="false")
           this.$refs.dialogForm.validate((valid) => {
             if (valid) {
               this.createOrUpdate().then(() => {                
-                this.loadData()                
                 this.dialogShow = false
+                this.loadData()
               })
             } else {
               console.log('error submit!!')
@@ -273,7 +275,7 @@ erplr-panel(:right-padding="false")
         } catch (e) {
           console.error(e)
         }
-      },      
+      }, 
       async createOrUpdate () {
         try {
           const methods = this.smsTemplate.empId ? 'put' : 'post'          
@@ -304,6 +306,28 @@ erplr-panel(:right-padding="false")
           console.error(e)
           this.msgShow(this)
           this.loading = false
+        }
+      },
+      async getDpt (params) {
+        try {
+          const { data } = await this.proxy(this, 'basic-server/v1/basicInfo/dpt/list', 'get', params)
+          if (data.return_code === 0) {
+            console.log('------dpt', data)            
+            this.editForm[2].list = data.list            
+          }
+        } catch (e) {
+          console.error(e)
+        }
+      },
+      async getOrg (params) {
+        try {
+          const { data } = await this.proxy(this, 'basic-server/v1/basicInfo/org/list', 'get', params)
+          if (data.return_code === 0) {
+            console.log('------dpt', data)            
+            this.editForm[1].list = data.list
+          }
+        } catch (e) {
+          console.error(e)
         }
       }
     }

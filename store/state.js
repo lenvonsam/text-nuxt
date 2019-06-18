@@ -454,6 +454,13 @@ export default {
     value: '3',
     label: '协标组'
   }],
+  zhdAcctList: [{
+    value: '华夏',
+    label: '华夏'
+  }, {
+    value: '农行',
+    label: '农行'
+  }],
   currentMenus: [],
   topPanes: [
     {

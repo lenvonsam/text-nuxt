@@ -27,13 +27,14 @@ erplr-panel(:right-padding="false")
     data () {
       return {       
         searchFormItems: [
-          {lbl: '数据类型', prop: 'deptName', val: '', type: 'select', placeholder:'请选择数据类型', list: []},
-          // {lbl: '开始日期', prop: 'deptName', val: '', placeholder:'请选择开始日期'},
-          // {lbl: '结束日期', prop: 'deptName', val: '', placeholder:'请选择结束日期'},
-          // {lbl: '对方账号', prop: 'deptName', val: '', placeholder:'请输入对方账号'},
-          // {lbl: '对方公司名', prop: 'deptName', val: '', placeholder:'请输入对方公司名'},
-          // {lbl: '交易金额', prop: 'deptName', val: '', placeholder:'请输入交易金额'},
-          // {lbl: '交易金额', prop: 'deptName', val: '', placeholder:'收款公司名'}
+          {lbl: '收款账号', prop: 'zhdAcctNo', val: '', placeholder:'请选择收款账号', type:'select', list: []},
+          {lbl: '收款公司', prop: 'accName', val: '', type: 'select', placeholder:'请选择收款公司', list: []},
+          {lbl: '开始日期', prop: 'startDate', val: '', type: 'date', placeholder:'请选择开始日期'},
+          {lbl: '结束日期', prop: 'endDate', val: '', type: 'date', placeholder:'请选择结束日期'},
+          {lbl: '对方账号', prop: 'oppAccNo', val: '', placeholder:'请输入对方账号'},
+          {lbl: '对方公司', prop: 'oppName', val: '', placeholder:'请输入对方公司名'},
+          {lbl: '交易金额', prop: 'amt', val: '', placeholder:'请输入交易金额'},
+          {lbl: '收款公司名', prop: 'deptName', val: '', placeholder:'收款公司名'}
         ],        
         tableValue: {          
           hasCbx: true,
@@ -64,10 +65,12 @@ erplr-panel(:right-padding="false")
       ...mapState({
         pageSize: state => state.pageSize,
         currentUser: state => state.user.currentUser,
-        cstmArr: state => state.cstmArr
+        cstmArr: state => state.cstmArr,
+        zhdAcctList: state => state.zhdAcctList
       })
     },
     mounted () {
+      this.searchFormItems[0].list = this.zhdAcctList
       this.$nextTick(()=>{
         this.queryObject = {
           currentPage: this.currentPage,
@@ -96,7 +99,7 @@ erplr-panel(:right-padding="false")
       },
       async loadData () {
         try {
-          const { data } = await this.proxy(this, 'basic-server/v1/basicInfo/dpt', 'get', this.queryObject)
+          const { data } = await this.proxy(this, 'extra-server/v1/bankpay/abc', 'post', this.queryObject)
           if (data.return_code === 0) {
             if (this.searchFormItems[0].list.length === 0) {
               this.searchFormItems[0].list = data.list
