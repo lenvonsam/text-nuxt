@@ -38,7 +38,7 @@ module.exports = {
   plugins: [
     { src: '@/plugins/element-ui', ssr: false },    
     // '@/plugins/mixins',
-    { src: '@/plugins/editTable', ssr: false }
+    // { src: '@/plugins/editTable', ssr: false }
   ],
 
   /*
