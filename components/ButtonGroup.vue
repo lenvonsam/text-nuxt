@@ -8,18 +8,17 @@
 
 <script>
   import { mapState } from 'vuex'
-  import excelUpload from './ExcelUpload.vue'
+  // import excelUpload from './ExcelUpload.vue'
   export default {
-    components: {
-      excelUpload
-    },
+    // components: {
+    //   excelUpload
+    // },
     props: {
       btns: {
         type: Array,
         default: () => {
           return []
         }
-        // required: true
       }
     },
     data () {
