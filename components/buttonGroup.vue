@@ -1,18 +1,18 @@
 <template lang="pug">
   el-button-group
     template(v-for="(btn,idx) in actionBtns")
-      //- excel-upload.float-left(v-if="btn.type == 'excel'", :dataType="btn.dataType", @uploadSuccess="fileUploadSuccess")
-      //-   el-button(size="small") {{btn.lbl}}
-      el-button(:type="getBtnClass(btn, idx)", size="small", @click="btnGroupClick(btn.type)") {{btn.lbl}}
+      excel-upload.float-left(v-if="btn.type == 'excel'", :dataType="btn.dataType", @uploadSuccess="fileUploadSuccess")
+        el-button(size="small") {{btn.lbl}}
+      el-button(:type="getBtnClass(btn, idx)", size="small", @click="btnGroupClick(btn.type)", v-else) {{btn.lbl}}
 </template>
 
 <script>
   import { mapState } from 'vuex'
-  // import excelUpload from './ExcelUpload.vue'
+  import excelUpload from './excelUpload.vue'
   export default {
-    // components: {
-    //   excelUpload
-    // },
+    components: {
+      excelUpload
+    },
     props: {
       btns: {
         type: Array,
