@@ -492,13 +492,6 @@ export default {
         path: '/hrManager/sms/templateManagement'
       }]
     }, {
-      title: '流程管理',
-      iconClass: 'el-icon-medal',
-      subItems: [{
-        title: '创建流程',
-        path: '/jsplumb'
-      }]
-    }, {
       title: '银行管理',
       iconClass: 'el-icon-bank-card',
       subItems: [{
