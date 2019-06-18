@@ -27,7 +27,7 @@ erplr-panel(:right-padding="false")
     data () {
       return {       
         searchFormItems: [
-          {lbl: '收款账号', prop: 'zhdAcctNo', val: '', placeholder:'请选择收款账号', type:'select', list: []},
+          {lbl: '收款账号', prop: 'zhdAcctNo', val: '', placeholder:'请选择收款账号', valProp: 'value', type:'select', list: []},
           {lbl: '收款公司', prop: 'accName', val: '', type: 'select', placeholder:'请选择收款公司', list: []},
           {lbl: '开始日期', prop: 'startDate', val: '', type: 'date', placeholder:'请选择开始日期'},
           {lbl: '结束日期', prop: 'endDate', val: '', type: 'date', placeholder:'请选择结束日期'},
@@ -43,8 +43,8 @@ erplr-panel(:right-padding="false")
             {lbl: '编号', prop: 'deptCode', width: '100px'},
             {lbl: '交易日期', prop: 'deptName', width: '100px'},
             {lbl: '交易时间', prop: 'deptManager'}, 
-            {lbl: '交易金额', prop: 'deptRemark'}, 
-            {lbl: '对方账号', prop: 'deptRemark'}, 
+            {lbl: '交易金额', prop: 'amt'}, 
+            {lbl: '对方账号', prop: 'accno'}, 
             {lbl: '对方公司名', prop: 'deptRemark'}, 
             {lbl: '对方开户行', prop: 'deptRemark'},
             {lbl: '收款公司名', prop: 'deptRemark'},
