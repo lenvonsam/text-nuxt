@@ -1,12 +1,5 @@
 <template lang="pug">
-no-ssr
-  .padding
-    h1 123
-    el-button(@click="$refs.elxEditable.insert()") 新增
-    elx-editable(border, :edit-config="{trigger: 'dblclick'}", :data.sync="list", @selection-change="handleSelectionChange",ref="elxEditable", @blur-active="cellEdit")
-      elx-editable-column(type="index", width="55")
-      elx-editable-column(prop="name", label="名字", min-width="300", :edit-render="{name: 'ElInput'}")
-      elx-editable-column(prop="code", label="编号", min-width="300")
+div test
 </template>
 
 <script>
