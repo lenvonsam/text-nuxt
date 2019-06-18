@@ -1,11 +1,10 @@
 <template lang="pug">
-//- div test
 erplr-panel(:right-padding="false")
   div(slot="left")
     left-search(:formItem="searchFormItems", :searchEvent="searchForm", ref="search")
   .erp-content(slot="right")
     button-group(:btns="buttonGroupInfo", @groupBtnClick="buttonGroupClick")
-    //- basic-elx-table(
+    basic-elx-table(
       :tableValue="tableValue",
       :total="totalCount",
       :currentPage="currentPage",
@@ -14,29 +13,29 @@ erplr-panel(:right-padding="false")
       @tableRowEdit="rowEdit",
       @tableRowDel="rowDel",
       @rowSelection="rowSelection")
-    //- el-dialog(ref="dialog", :title="dialogTitle", :visible="dialogShow",  width="800px", @close="dialogHandler('cancel')")
-    //-   el-form(v-if="dialogShow", ref="dialogForm", :model="smsTemplate", label-width="70px")
-    //-     el-form-item(v-for="item in editForm", :label="item.lbl", :key="item.prop")
-    //-       template(v-if="item.type === 'textarea'")
-    //-         el-input(type="textarea", :rows="2", placeholder="请输入内容", v-model="smsTemplate[item.prop]", size="small")          
-    //-       template(v-else)
-    //-         el-input.full-width(v-model="smsTemplate[item.prop]", clearable, size="small", :placeholder="item.placeholder")
-    //-   .dialog-footer(slot="footer")
-    //-     el-button(@click="dialogHandler('cancel')", size="small") 取消
-    //-     el-button(@click="dialogHandler('sure')", type="primary", size="small") 确定
+    el-dialog(ref="dialog", :title="dialogTitle", :visible="dialogShow",  width="800px", @close="dialogHandler('cancel')")
+      el-form(v-if="dialogShow", ref="dialogForm", :model="smsTemplate", label-width="70px")
+        el-form-item(v-for="item in editForm", :label="item.lbl", :key="item.prop")
+          template(v-if="item.type === 'textarea'")
+            el-input(type="textarea", :rows="2", placeholder="请输入内容", v-model="smsTemplate[item.prop]", size="small")          
+          template(v-else)
+            el-input.full-width(v-model="smsTemplate[item.prop]", clearable, size="small", :placeholder="item.placeholder")
+      .dialog-footer(slot="footer")
+        el-button(@click="dialogHandler('cancel')", size="small") 取消
+        el-button(@click="dialogHandler('sure')", type="primary", size="small") 确定
 </template>
 
 <script>
   import { mapState } from 'vuex'
   import buttonGroup from '~/components/buttonGroup.vue'
-  // import erplrPanel from '~/components/erplrPanel'
-  // import basicElxTable from '~/components/basicElxTable'
+  import erplrPanel from '~/components/erplrPanel'
+  import basicElxTable from '~/components/basicElxTable'
   import leftSearch from '~/components/leftSearch'
   export default {
     layout: 'backend',
     components: {      
-      // basicElxTable,
-      // erplrPanel,
+      basicElxTable,
+      erplrPanel,
       leftSearch,  
       buttonGroup
     },
