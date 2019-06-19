@@ -128,16 +128,26 @@ erplr-panel(:right-padding="false")
         this.loadData()
       },
       searchForm (values) {
+        this.currentPage = 1
+        this.queryObject.currentPage = this.currentPage
         for (const key in values) {
-          this.queryObject[key] = values[key]
+          if ((key  === 'startDate' || key === 'endDate') && values[key]) {
+            this.queryObject[key] = values[key].replace(/-/g, '')
+          } else {
+            this.queryObject[key] = values[key]
+          }
           if (!this.queryObject[key]) {
             delete this.queryObject[key]
-          }
-        }        
+          }          
+        }
         this.loadData()       
       },
       handleTabHandler (tab, event) {
         this.activeTab = tab.name
+        this.queryObject = {
+          currentPage: this.currentPage,
+          pageSize: this.pageSize
+        }
         this.loadData()
       },
       async loadData () {

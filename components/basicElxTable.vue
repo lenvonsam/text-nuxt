@@ -31,9 +31,12 @@
               :width="head.width ? head.width : ''", 
               :min-width="head.minWidth? head.minWidth : ''", 
               :label="head.lbl")
-    //- .mt-15.text-right
-    .mt-5.text-right
+    //- .mt-5.text-right
       el-pagination(background, layout="prev, pager, next, jumper", :total="pgTotal", :page-size="pageSize", :current-page="currentPage", @current-change="pgChange")
+    .padding.text-right.row(v-if="tableValue.page ? tableValue.page : true")
+      .col
+        el-pagination(:current-page="currentPage", :page-size="pageSize", background, layout="prev, pager, next, jumper", :total="total", @current-change="pgChange")
+      span(style="padding-bottom: 3px;") 共 {{total}} 条数据
 </template>
 
 <script>
@@ -141,3 +144,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+.row{
+  align-items: center;
+}
+</style>
+

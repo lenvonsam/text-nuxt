@@ -27,7 +27,10 @@
     "sha1": "^1.1.1",
     "vue-element-extends": "^1.2.19",
     "xe-ajax": "^3.5.3",
-    "xe-utils": "^1.8.26"    
+    "xe-utils": "^1.8.26",
+    "html2canvas": "^1.0.0-rc.3",
+    "jsplumb": "^2.10.0",
+    "canvg": "^1.5.3"
   },
   "devDependencies": {
     "nodemon": "^1.18.9",
