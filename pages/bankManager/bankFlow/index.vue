@@ -1,15 +1,27 @@
 <template lang="pug">
 erplr-panel(:right-padding="false")
   div(slot="left")
-    left-search(:formItem="searchFormItems", :searchEvent="searchForm", ref="search", :labelWidth="'90px'")
+    left-search(:formItem="this.activeTab === 'abc' ? searchFormItems : hxSearchFormItems", :searchEvent="searchForm", ref="search", :labelWidth="'90px'")
+    //- left-search(:formItem="hxSearchFormItems", :searchEvent="searchForm", ref="search", :labelWidth="'90px'", v-else)
   .erp-content(slot="right")
-    basic-elx-table(
-      :tableValue="tableValue",
-      :total="totalCount",
-      :currentPage="currentPage",
-      :pageSize="pageSize",     
-      @paginateChange="tableChange",      
-      @rowSelection="rowSelection")    
+    el-tabs(v-model="activeTab", type="border-card", @tab-click="handleTabHandler")
+      el-tab-pane(label="农行", name="abc")
+        basic-elx-table(
+          :loading="tabloading"
+          :tableValue="tableValue",
+          :total="totalCount",
+          :currentPage="currentPage",
+          :pageSize="pageSize",     
+          @paginateChange="tableChange",      
+          @rowSelection="rowSelection")
+      el-tab-pane(label="华夏", name="hx")
+        basic-elx-table(
+          :tableValue="hxTableValue",
+          :total="totalCount",
+          :currentPage="currentPage",
+          :pageSize="pageSize",     
+          @paginateChange="tableChange",      
+          @rowSelection="rowSelection")
 </template>
 
 <script>
@@ -25,30 +37,57 @@ erplr-panel(:right-padding="false")
       leftSearch
     },
     data () {
-      return {       
-        searchFormItems: [
-          {lbl: '收款账号', prop: 'zhdAcctNo', val: '', placeholder:'请选择收款账号', valProp: 'value', type:'select', list: []},
-          {lbl: '收款公司', prop: 'accName', val: '', type: 'select', placeholder:'请选择收款公司', list: []},
+      return {
+        activeTab: 'abc',    
+        tabloading: true,
+        searchFormItems: [          
           {lbl: '开始日期', prop: 'startDate', val: '', type: 'date', placeholder:'请选择开始日期'},
           {lbl: '结束日期', prop: 'endDate', val: '', type: 'date', placeholder:'请选择结束日期'},
           {lbl: '对方账号', prop: 'oppAccNo', val: '', placeholder:'请输入对方账号'},
           {lbl: '对方公司', prop: 'oppName', val: '', placeholder:'请输入对方公司名'},
           {lbl: '交易金额', prop: 'amt', val: '', placeholder:'请输入交易金额'},
-          {lbl: '收款公司名', prop: 'deptName', val: '', placeholder:'收款公司名'}
+          {lbl: '收款公司名', prop: 'accName', val: '', placeholder:'收款公司名'}
+        ],
+        hxSearchFormItems: [          
+          {lbl: '开始日期', prop: 'startDate', val: '', type: 'date', placeholder:'请选择开始日期'},
+          {lbl: '结束日期', prop: 'endDate', val: '', type: 'date', placeholder:'请选择结束日期'},
+          {lbl: '对方账号', prop: 'oppAccNo', val: '', placeholder:'请输入对方账号'},
+          {lbl: '对方公司', prop: 'oppName', val: '', placeholder:'请输入对方公司名'},
+          {lbl: '交易金额', prop: 'amt', val: '', placeholder:'请输入交易金额'},
+          {lbl: '收款账号', prop: 'zhdAcctNo', val: '', placeholder:'收款收款账号'}
         ],        
-        tableValue: {          
+        tableValue: {        
           hasCbx: true,
-          showRowIndex: true,
+          showRowIndex: false,
           tableHead: [
-            {lbl: '编号', prop: 'deptCode', width: '100px'},
-            {lbl: '交易日期', prop: 'deptName', width: '100px'},
-            {lbl: '交易时间', prop: 'deptManager'}, 
-            {lbl: '交易金额', prop: 'amt'}, 
-            {lbl: '对方账号', prop: 'accno'}, 
-            {lbl: '对方公司名', prop: 'deptRemark'}, 
-            {lbl: '对方开户行', prop: 'deptRemark'},
-            {lbl: '收款公司名', prop: 'deptRemark'},
-            {lbl: '备注内容', prop: 'deptRemark'}
+            {lbl: '编号', prop: 'id', width: '45px'},
+            {lbl: '交易日期', prop: 'trDate', width: '80px'},
+            {lbl: '交易时间', prop: 'timeStab', width: '80px',  formatter: (row, column, cellValue, index) => {
+              return cellValue ? cellValue.substr(8, 2) + ':' + cellValue.substr(10,2) + ':' + cellValue.substr(12,2) : null
+            }}, 
+            {lbl: '交易金额', prop: 'amt', width: '120px'}, 
+            {lbl: '对方账号', prop: 'oppAccNo', width: '200px'}, 
+            {lbl: '对方公司名', prop: 'oppName', width: '200px'}, 
+            {lbl: '对方开户行', prop: 'oppBkName', width: '230px'},
+            {lbl: '收款公司名', prop: 'accName', width: '220px'},
+            {lbl: '备注', prop: 'postScript'}
+          ],
+          tableData: []
+        },
+        hxTableValue: {        
+          hasCbx: true,
+          showRowIndex: false,
+          tableHead: [
+            {lbl: '编号', prop: 'id', width: '45px'},
+            {lbl: '交易日期', prop: 'transDate', width: '80px'},
+            {lbl: '交易时间', prop: 'transTime', width: '80px'},
+            {lbl: '交易金额', prop: 'amount', width: '120px'}, 
+            {lbl: '对方账号', prop: 'acctNo', width: '200px'}, 
+            {lbl: '对方公司名', prop: 'acctName', width: '200px'}, 
+            {lbl: '对方开户行', prop: 'acctBank', width: '230px'},
+            {lbl: '收款账号', prop: 'zhdAcctNo', width: '200px'},
+            {lbl: '会计流水', prop: 'serial', width: '70px'},
+            {lbl: '企业端流水号', prop: 'cropSerial', width: '95px'}
           ],
           tableData: []
         },
@@ -65,12 +104,12 @@ erplr-panel(:right-padding="false")
       ...mapState({
         pageSize: state => state.pageSize,
         currentUser: state => state.user.currentUser,
-        cstmArr: state => state.cstmArr,
-        zhdAcctList: state => state.zhdAcctList
+        cstmArr: state => state.cstmArr
+        // zhdAcctList: state => state.zhdAcctList
       })
     },
     mounted () {
-      this.searchFormItems[0].list = this.zhdAcctList
+      // this.searchFormItems[0].list = this.zhdAcctList
       this.$nextTick(()=>{
         this.queryObject = {
           currentPage: this.currentPage,
@@ -94,22 +133,29 @@ erplr-panel(:right-padding="false")
           if (!this.queryObject[key]) {
             delete this.queryObject[key]
           }
-        }
+        }        
         this.loadData()       
       },
+      handleTabHandler (tab, event) {
+        this.activeTab = tab.name
+        this.loadData()
+      },
       async loadData () {
-        try {
-          const { data } = await this.proxy(this, 'extra-server/v1/bankpay/abc', 'post', this.queryObject)
+        this.tabloading = true
+        try {          
+          const url = 'extra-server/v1/bankpay/' + this.activeTab
+          const { data } = await this.proxy(this, url, 'post', this.queryObject)
           if (data.return_code === 0) {
-            if (this.searchFormItems[0].list.length === 0) {
-              this.searchFormItems[0].list = data.list
-            }            
             this.tableValue.tableData = data.list
             this.totalCount = data.total
-          }
+            if (this.activeTab === 'hx') {
+              this.hxTableValue.tableData = data.list
+            }
+          }          
         } catch (e) {
           console.error(e)
         }
+        this.tabloading = false
       }
     }
   }

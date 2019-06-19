@@ -1,6 +1,7 @@
 <template lang="pug">
   div
-    elx-table.mt-15(ref="basicEditable", 
+    elx-table.mt-15(ref="basicEditable",
+      v-loading="loading",
       :data.sync="tableValue.tableData", 
       size="small",
       border, 
@@ -38,6 +39,10 @@
 <script>
 export default {
   props: {
+    loading: {
+      type: Boolean,
+      default: false
+    },
     tableValue: {
       type: Object,
       required: true

@@ -1,24 +1,12 @@
 <template lang="pug">
 .content
   .padding.bg-container 查询
-  .mt-10
-    //- .row.pl-10.pr-10.mb-10(v-for="item in formItem", :key="item.prop")
-    //-   .col.flex-70.text-right.pr-5
-    //-     label {{item.lbl}}
-    //-   .col
-    //-     el-select.full-width(v-model="item.val", filterable, clearable, :placeholder="item.placeholder", v-if="item.type == 'select'", size="small")
-    //-       el-option(v-for="itemIist in item.list", :key="itemIist.value", :label="itemIist.label", :value="itemIist.value")
-    //-         span {{itemIist.label}}
-    //-     el-input.full-width(v-model="item.val", v-else, :placeholder="item.placeholder", size="small", clearable)
-    //- .mt-10.text-center
-    //-   el-button-group
-    //-     el-button(type="primary", size="small", @click="searchHandler") 搜索
-    //-     el-button(size="small", @click="resetForm") 重置
+  .mt-10    
     el-form(inline, :model="formItemModel", ref="searchForm", :label-width="labelWidth")
       el-form-item.mb-10.mr-5.ml-5(:label="item.lbl", v-for="item in formItem", :key="item.prop", clearable)
         //- el-input(size="small", v-model="formItemModel[item.prop]")
         template(v-if="item.type == 'select'")
-          el-select.full-width(v-model="formItemModel[item.valProp ? item.valProp : item.prop]", filterable, clearable, :placeholder="item.placeholder", size="small")
+          el-select.full-width(v-model="formItemModel[item.prop]", filterable, clearable, :placeholder="item.placeholder", size="small")
             el-option(v-for="itemIist in item.list", :key="itemIist[item.prop]", :label="itemIist[item.prop]", :value="itemIist[item.valProp ? item.valProp : item.prop]")
         el-date-picker.full-width(v-model="formItemModel[item.prop]", type="date",v-else-if="item.type == 'date'", :placeholder="item.placeholder",size="small", value-format="yyyy-MM-dd")
         el-date-picker.full-width(v-model="formItemModel[item.prop]", type="datetime",v-else-if="item.type == 'datetime'", :placeholder="item.placeholder", size="small", value-format="yyyy-MM-dd HH:mm:ss")

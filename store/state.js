@@ -1,5 +1,5 @@
 export default {
-  pageSize: 10,
+  pageSize: 20,
   // http://wechat.xingyun361.com/
   // 192.168.20.149:8080
   // fileUploadUrl: 'http://wechat.xingyun361.com/quasarserver/file/uedit/upload',  
