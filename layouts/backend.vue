@@ -37,6 +37,14 @@ no-ssr
 <script>
 import { mapState } from 'vuex'
 export default {
+  head: {
+    link: [
+      { rel: 'stylesheet', href: 'https://cdn.bootcss.com/jsPlumb/2.10.0/css/jsplumbtoolkit-defaults.min.css' }
+    ],
+    script: [
+      { src: 'https://cdn.bootcss.com/jsPlumb/2.10.0/js/jsplumb.min.js', async: true,  defer: true }
+    ]
+  },
   data() {
     return {
       collapse: false,

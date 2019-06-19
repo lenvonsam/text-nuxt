@@ -125,14 +125,14 @@ export default {
     this.$nextTick(() => {      
       this.$refs.content.style.cssText = "left:" + this.root.left +"px; top:" + this.root.top + "px"
       console.log('---------------init')
-      this.$jsplumb.ready(this.init)
+      window.jsPlumb.ready(this.init)
     })  
   },
   methods: {
     init() {
       // 初始化界面
       const me = this     
-      this.jsPlumbObj = this.$jsplumb.getInstance()
+      this.jsPlumbObj = window.jsPlumb.getInstance()
       this.jsPlumbObj.setContainer('diagramContainer')
       this.jsPlumbObj.importDefaults(this.config)       
       this.jsPlumbObj.bind('beforeDrop', (connInfo) => {
@@ -312,42 +312,42 @@ export default {
     getImg () {
       // 导出png
       console.log(this)
-      console.log(this.$jsplumb)
-      console.log(this.$canvg)
-      console.log(this.$h2canv)
-      if (typeof this.$h2canv !== 'undefined') {
-        // 以下是对svg的处理
-        const nodesToRecover = []
-        const nodesToRemove = []
-        const svgElem = Array.prototype.slice.call(document.getElementById('content-box').getElementsByTagName('svg'))
-        svgElem.map((node) => {
-          const parentNode = node.parentNode
-          const svg = node.outerHTML.trim()          
-          const canvas = document.createElement('canvas')
-          this.$canvg(canvas, svg)      
-          if (node.style.position) {
-            canvas.style.position += node.style.position
-            canvas.style.left += node.style.left
-            canvas.style.top += node.style.top
-          }          
-          nodesToRecover.push({
-            parent: parentNode,
-            child: node
-          });
-          parentNode.removeChild(node);
-          nodesToRemove.push({
-            parent: parentNode,
-            child: canvas
-          });
-          parentNode.appendChild(canvas);
-        })                
-        // const drawDom = this.$refs['content-box']
-        this.$h2canv(document.querySelector("#content-box")).then(canvas => {          
-          const imgUrl = canvas.toDataURL()          
-          this.outputData.type = 'img'
-          this.outputData.data = imgUrl
-        })
-      }
+      // console.log(this.$jsplumb)
+      // console.log(this.$canvg)
+      // console.log(this.$h2canv)
+      // if (typeof this.$h2canv !== 'undefined') {
+      //   // 以下是对svg的处理
+      //   const nodesToRecover = []
+      //   const nodesToRemove = []
+      //   const svgElem = Array.prototype.slice.call(document.getElementById('content-box').getElementsByTagName('svg'))
+      //   svgElem.map((node) => {
+      //     const parentNode = node.parentNode
+      //     const svg = node.outerHTML.trim()          
+      //     const canvas = document.createElement('canvas')
+      //     this.$canvg(canvas, svg)      
+      //     if (node.style.position) {
+      //       canvas.style.position += node.style.position
+      //       canvas.style.left += node.style.left
+      //       canvas.style.top += node.style.top
+      //     }          
+      //     nodesToRecover.push({
+      //       parent: parentNode,
+      //       child: node
+      //     });
+      //     parentNode.removeChild(node);
+      //     nodesToRemove.push({
+      //       parent: parentNode,
+      //       child: canvas
+      //     });
+      //     parentNode.appendChild(canvas);
+      //   })                
+      //   // const drawDom = this.$refs['content-box']
+      //   this.$h2canv(document.querySelector("#content-box")).then(canvas => {          
+      //     const imgUrl = canvas.toDataURL()          
+      //     this.outputData.type = 'img'
+      //     this.outputData.data = imgUrl
+      //   })
+      // }
     },
     closeOutput() {
       this.outputShow = false
