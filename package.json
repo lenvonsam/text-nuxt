@@ -18,6 +18,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/pwa": "^2.6.0",
+    "chart.js": "^2.8.0",
     "connect-multiparty": "^2.2.0",
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.11",
@@ -25,6 +26,7 @@
     "express-session": "^1.16.1",
     "nuxt": "^2.4.0",
     "sha1": "^1.1.1",
+    "vue-chartjs": "^3.4.2",
     "vue-element-extends": "^1.2.19",
     "xe-ajax": "^3.5.3",
     "xe-utils": "^1.8.26"

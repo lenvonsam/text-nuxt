@@ -462,7 +462,7 @@ export default {
     label: '农行'
   }],
   currentMenus: [],
-  topPanes: [
+  topPanes: [    
     {
       title: '基础设置',
       key: 'basic'
@@ -473,6 +473,10 @@ export default {
   ],
   modeMenus: {
     'basic': [{
+      title: '首页',
+      iconClass: 'el-icon-s-data',
+      path: '/basics'
+    },{
       title: '基础数据',
       iconClass: 'el-icon-document-copy',
       subItems: [{
