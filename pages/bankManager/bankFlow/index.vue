@@ -1,8 +1,7 @@
 <template lang="pug">
 erplr-panel(:right-padding="false")
   div(slot="left")
-    left-search(:formItem="this.activeTab === 'abc' ? searchFormItems : hxSearchFormItems", :searchEvent="searchForm", ref="search", :labelWidth="'90px'")
-    //- left-search(:formItem="hxSearchFormItems", :searchEvent="searchForm", ref="search", :labelWidth="'90px'", v-else)
+    left-search(:formItem="this.activeTab === 'abc' ? hxSearchFormItems : hxSearchFormItems", :searchEvent="searchForm", ref="search", :labelWidth="'90px'")
   .erp-content(slot="right")
     el-tabs(v-model="activeTab", type="border-card", @tab-click="handleTabHandler")
       el-tab-pane(label="农行", name="abc")
@@ -57,7 +56,7 @@ erplr-panel(:right-padding="false")
           {lbl: '收款账号', prop: 'zhdAcctNo', val: '', placeholder:'收款收款账号'}
         ],        
         tableValue: {        
-          hasCbx: true,
+          hasCbx: false,
           showRowIndex: false,
           tableHead: [
             {lbl: '编号', prop: 'id', width: '45px'},
@@ -75,7 +74,7 @@ erplr-panel(:right-padding="false")
           tableData: []
         },
         hxTableValue: {        
-          hasCbx: true,
+          hasCbx: false,
           showRowIndex: false,
           tableHead: [
             {lbl: '编号', prop: 'id', width: '45px'},
@@ -144,10 +143,12 @@ erplr-panel(:right-padding="false")
       },
       handleTabHandler (tab, event) {
         this.activeTab = tab.name
+        this.currentPage = 1
         this.queryObject = {
           currentPage: this.currentPage,
           pageSize: this.pageSize
         }
+        this.$refs.search.resetForm()
         this.loadData()
       },
       async loadData () {

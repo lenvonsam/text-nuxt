@@ -1,8 +1,9 @@
 <template lang="pug">
-erplr-panel
+erplr-panel(:right-padding="false")
   div(slot="left")
     left-search(:formItem="searchFormItems", :labelWidth="'90px'",  :searchEvent="searchForm", ref="search")
   .erp-content(slot="right")
+    button-group(:btns="buttonGroupInfo", @groupBtnClick="buttonGroupClick")
     basic-elx-table(
       :tableValue="tableValue",
       :total="totalCount",
@@ -28,12 +29,7 @@ erplr-panel
     },
     data () {
       return {
-        buttonGroupInfo: [
-          {lbl: '新增', type: 'add', icon: 'el-icon-plus'},
-          {lbl: '修改', type: 'edit', icon: 'el-icon-edit'},
-          {lbl: '删除', type: 'del', icon: 'el-icon-delete'},
-          {lbl: '刷新', type: 'refresh', icon: 'el-icon-refresh'}
-        ],                     
+        buttonGroupInfo: [{lbl: '刷新', type: 'refresh', icon: 'el-icon-refresh'}],                     
         searchFormItems: [
           {lbl: '开始时间', type:'datetime', prop: 'createAtStart', val: '', placeholder:'请选择开始时间'},
           {lbl: '结束时间', type:'datetime', prop: 'createAtEnd', val: '', placeholder:'请选择结束时间'},
@@ -106,6 +102,12 @@ erplr-panel
           }
         }
         this.loadData()       
+      },
+      buttonGroupClick (type) {
+        this.$refs.search.searchHandler()
+        // this.loadData().then(() => {
+        //   this.$message.success('刷新成功')
+        // })
       },
       async loadData () {
         try {

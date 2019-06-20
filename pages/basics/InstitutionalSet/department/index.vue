@@ -78,7 +78,7 @@ erplr-panel(:right-padding="false")
           currentPage: this.currentPage,
           pageSize: this.pageSize
         },
-        loading: false,
+        loading: true,
         dialogShow: false,
         smsTemplate: {groupName: '', groupId: '', name: '', content: ''},
         copySmsTemplate: {},
@@ -141,9 +141,7 @@ erplr-panel(:right-padding="false")
             this.rowDel() 
             break
           case 'refresh':
-            this.loadData().then(() => {
-              this.$message.success('刷新成功')
-            })
+            this.$refs.search.searchHandler()
             break
         }
       },
@@ -198,6 +196,7 @@ erplr-panel(:right-padding="false")
         })
       },
       async loadData () {
+        this.loading = true
         try {
           const { data } = await this.proxy(this, 'basic-server/v1/basicInfo/dpt', 'get', this.queryObject)
           if (data.return_code === 0) {
@@ -210,6 +209,7 @@ erplr-panel(:right-padding="false")
         } catch (e) {
           console.error(e)
         }
+        this.loading = false
       },      
       async createOrUpdate () {
         try {

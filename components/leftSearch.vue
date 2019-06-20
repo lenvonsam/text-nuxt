@@ -7,7 +7,7 @@
         //- el-input(size="small", v-model="formItemModel[item.prop]")
         template(v-if="item.type == 'select'")
           el-select.full-width(v-model="formItemModel[item.prop]", filterable, clearable, :placeholder="item.placeholder", size="small")
-            el-option(v-for="itemIist in item.list", :key="itemIist[item.prop]", :label="itemIist[item.prop]", :value="itemIist[item.valProp ? item.valProp : item.prop]")
+            el-option(v-for="itemIist in item.list", :key="itemIist[item.prop]", :label="itemIist[item.lblProp ? item.lblProp : item.prop]", :value="itemIist[item.valProp ? item.valProp : item.prop]")
         el-date-picker.full-width(v-model="formItemModel[item.prop]", type="date",v-else-if="item.type == 'date'", :placeholder="item.placeholder",size="small", value-format="yyyy-MM-dd")
         el-date-picker.full-width(v-model="formItemModel[item.prop]", type="datetime",v-else-if="item.type == 'datetime'", :placeholder="item.placeholder", size="small", value-format="yyyy-MM-dd HH:mm:ss")
         el-date-picker.full-width.crm-timeLimit(v-model="formItemModel[item.prop]", type="datetimerange", v-else-if="item.type == 'datetimerange'", range-separator="-", start-placeholder="开始日期", end-placeholder="结束日期", size="small", value-format="yyyy-MM-dd HH:mm:ss")

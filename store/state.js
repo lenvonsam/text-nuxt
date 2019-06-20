@@ -466,6 +466,9 @@ export default {
     {
       title: '基础设置',
       key: 'basic'
+    }, {
+      title: '商贸物流',
+      key: 'trade'
     }
   ],
   modeMenus: {

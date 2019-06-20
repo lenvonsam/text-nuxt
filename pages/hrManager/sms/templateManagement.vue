@@ -1,5 +1,5 @@
 <template lang="pug">
-erplr-panel
+erplr-panel(:right-padding="false")
   div(slot="left")
     left-search(:formItem="searchFormItems", :searchEvent="searchForm", ref="search")
   .erp-content(slot="right")
@@ -14,8 +14,8 @@ erplr-panel
       @tableRowDel="rowDel",
       @rowSelection="rowSelection")
     el-dialog(ref="dialog", :title="dialogTitle", :visible="dialogShow",  width="800px", @close="dialogHandler('cancel')")
-      el-form(v-if="dialogShow", ref="dialogForm", :model="smsTemplate", label-width="70px")
-        el-form-item(v-for="item in editForm", :label="item.lbl", :key="item.prop")
+      el-form(v-if="dialogShow", ref="dialogForm", :rules="rules", :model="smsTemplate", label-width="90px")
+        el-form-item(v-for="item in editForm", :label="item.lbl", :key="item.prop", :prop="item.rules ? item.prop : null")
           template(v-if="item.type === 'textarea'")
             el-input(type="textarea", :rows="2", placeholder="请输入内容", v-model="smsTemplate[item.prop]", size="small")
           template(v-else-if="item.type === 'select'")
@@ -59,17 +59,22 @@ erplr-panel
           {lbl: '刷新', type: 'refresh', icon: 'el-icon-refresh'}
         ],
         editForm: [
-          {lbl: '模板分组', prop: 'groupName', placeholder: '请选择模板分组', select: {
+          {lbl: '模板分组', prop: 'groupName', rules: true, placeholder: '请选择模板分组', select: {
             list: [],
             filterable: true,            
             labelProp: 'name',
             valueProp: 'id'
           }, type: 'select'},
-          {lbl: '模板名称', prop: 'name', placeholder: '请输入模板名称',},
-          {lbl: '模板内容', prop: 'content', type: 'textarea'}
-        ],              
+          {lbl: '模板名称', prop: 'name', rules: true, placeholder: '请输入模板名称'},
+          {lbl: '模板内容', prop: 'content', rules: true, type: 'textarea', placeholder: '请输入模板内容'}
+        ], 
+        rules: {
+          groupName: [{ required: true, message: '请选择模板分组', trigger: 'change' }],
+          name: [{ required: true, message: '请输入模板名称', trigger: 'change' }],
+          content: [{ required: true, message: '模板内容', trigger: 'change' }]
+        },           
         searchFormItems: [
-          {lbl: '模板分组', prop: 'groupId', val: '', type: 'select', placeholder:'请输入模板分组', list: []},
+          {lbl: '模板分组', prop: 'groupId', val: '', type: 'select', lblProp: 'name', valProp: 'id', placeholder:'请输入模板分组', list: []},
           {lbl: '模板名称', prop: 'name', val: '', placeholder:'请输入模板名称'},
           {lbl: '模板内容', prop: 'content', val: '', placeholder:'请输入模板内容'}
         ],        
@@ -157,9 +162,7 @@ erplr-panel
             this.rowDel() 
             break
           case 'refresh':
-            this.loadData().then(() => {
-              this.$message.success('刷新成功')
-            })
+            this.$refs.search.searchHandler()
             break
         }
       },
@@ -231,16 +234,17 @@ erplr-panel
           const { data } = await this.proxy(this, 'extra-server/v1/msg_template_group', 'get', {currentPage: 1, pageSize: 50})
           console.log(data)
           if (data.return_code === 0) {
-            const arr = []
-            data.data.map((item) => {
-              const obj = {
-                label: item.name,
-                value: item.id
-              }
-              arr.push(obj)
-            })
+            // const arr = []
+            // data.data.map((item) => {
+            //   const obj = {
+            //     label: item.name,
+            //     value: item.id
+            //   }
+            //   arr.push(obj)
+            // })
             this.editForm[0].select.list = data.data
-            this.searchFormItems[0].list = arr
+            this.searchFormItems[0].list = data.data
+            // console.log(this.searchFormItems[0].list)
           }
         } catch (e) {
           console.error(e)

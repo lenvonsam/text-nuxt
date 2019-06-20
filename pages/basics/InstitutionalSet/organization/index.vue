@@ -9,7 +9,8 @@ erplr-panel(:right-padding="false")
       :tableValue="tableValue",
       :total="totalCount",
       :currentPage="currentPage",
-      :pageSize="pageSize",     
+      :pageSize="pageSize",
+      :loading="loading"   
       @paginateChange="tableChange",
       @tableRowEdit="rowEdit",
       @tableRowDel="rowDel",
@@ -104,7 +105,7 @@ erplr-panel(:right-padding="false")
           currentPage: this.currentPage,
           pageSize: this.pageSize
         },
-        loading: false,
+        loading: true,
         dialogShow: false,
         smsTemplate: {},
         copySmsTemplate: {},
@@ -166,9 +167,8 @@ erplr-panel(:right-padding="false")
             this.rowDel() 
             break
           case 'refresh':
-            this.loadData().then(() => {
-              this.$message.success('刷新成功')
-            })
+            // this.$refs.search.searchHandler()
+            this.loadData()
             break
         }
       },      
@@ -224,6 +224,7 @@ erplr-panel(:right-padding="false")
         } catch (e) {
           console.error(e)
         }
+        this.loading = false
       },      
       async createOrUpdate () {
         try {

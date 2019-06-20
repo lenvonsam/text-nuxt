@@ -9,7 +9,7 @@ erplr-panel(:right-padding="false")
     el-button-group.mt-15.ml-15
       el-button(size="small", icon="el-icon-check", type="primary", @click="save('json')") 导出json
       el-button(size="small", icon="el-icon-check", type="primary", @click="save('IMG')") 导出IMG
-    .mt-35      
+    .mt-35
       el-form(ref="from", :model="form", label-width="70px")
         el-form-item(label="主标题")
           el-input(v-model="form.mainTitle", ref="nodeForm", size="small")
@@ -17,31 +17,32 @@ erplr-panel(:right-padding="false")
           el-input(v-model="form.title", size="small")
       el-form(:model="form", label-width="70px")        
         el-form-item(label="edge")
-          el-input(v-model="edge.label", @blur="edgeEdit", ref="edge", size="small")
+          el-input(v-model="edge.label", @input="edgeEdit", ref="edge", size="small")
   .erp-content.no-padding(slot="right")
-    .main(id="content-box", ref="content-box")
+    .main(id="content-box", ref="content-box", v-if="contentBoxShow")
       .main-content(id="content", ref="content")
         el-tooltip(effect="dark", :content="item.mainTitle +' / '+ item.title", placement="right", v-for="(item, index) in root.dataList", :key="item.id")
           .card-container(:ref="item.id", :id="item.id", @click="checkNode(item, index)", @dblclick="dblclickNode", :style="{top: item.top + 'px', left: item.left + 'px'}")
             div(:class="boxClass(item)")
               .main-text {{item.mainTitle}}
               .value-text {{item.title}}
-  el-dialog(:visible="outputShow", @close="closeOutput", width="1500px")
-    .padding(v-if="outputData.type === 'json'") {{outputData.data}}
-    div(:style="{overflow: 'auto', width: '100%', height: '500px'}", v-else)
-      img(:src="outputData.data", alt="alt")
-    .text-right
-      el-button(type="primary", size="small", @click="saveOutput") 保存
+    el-dialog(:visible="outputShow", @close="closeOutput", width="1200px")
+      .padding(v-if="outputData.type === 'json'") {{outputData.data}}
+      div(:style="{overflow: 'auto', width: '100%', height: '500px'}", v-else)
+        img(:src="outputData.data", alt="alt")
+      .text-right
+        el-button(type="primary", size="small", @click="saveOutput") 保存
 </template>
 <script>
 import erplrPanel from '~/components/erplrPanel'
 export default {
-  layout: 'backend',
+  layout: 'backend',  
   components: {
     erplrPanel
   },
   data () {
     return {
+      contentBoxShow: true,
       outputShow: false,
       outputData: {
         type: 'json',
@@ -54,23 +55,8 @@ export default {
         title: '',
         mainTitle: ''   
       },      
-      config: {
-        // connectorHoverStyle: { // 鼠标悬浮在连接线上的样式
-        //   lineWidth: 1,
-        //   strokeStyle: 'red',
-        //   outlineWidth: 10,
-        //   outlineColor: ''
-        // },
-        // connectorStyle: { // 连接线的颜色，大小样式
-        //   lineWidth: 1,
-        //   strokeStyle: '#61B7CF',
-        //   joinstyle: 'round',
-        //   fill: 'pink',
-        //   outlineColor: '',
-        //   outlineWidth: ''          
-        // },
+      config: {        
         maxConnections: -1,
-        // endpointStyle: {},
         endpoint: ['Dot', {
           radius: 15,
           fill: '#cfe7ff'
@@ -120,8 +106,8 @@ export default {
       ]
     ]
   },
-  mounted() {
-    this.root = JSON.parse('{"edgesList":[{"id":"con_85","sourceId":"node0","targetId":"node1","label":"","uuids":["node0-right","node1-left"]},{"id":"con_87","sourceId":"node0","targetId":"node1","label":"","uuids":["node0-top","node1-top"]},{"id":"con_89","sourceId":"node0","targetId":"node1","label":"","uuids":["node0-bottom","node1-bottom"]},{"id":"con_91","sourceId":"node2","targetId":"node1","label":"333","uuids":["node2-top","node1-right"]},{"id":"con_93","sourceId":"node3","targetId":"node2","label":"","uuids":["node3-left","node2-right"]},{"id":"con_95","sourceId":"node4","targetId":"node0","label":"","uuids":["node4-top","node0-left"]},{"id":"con_97","sourceId":"node5","targetId":"node3","label":"","uuids":["node5-bottom","node3-top"]},{"id":"con_99","sourceId":"node6","targetId":"node3","label":"","uuids":["node6-top","node3-right"]},{"id":"con_101","sourceId":"node6","targetId":"node3","label":"","uuids":["node6-left","node3-bottom"]},{"id":"con_106","sourceId":"node2","targetId":"node4","label":"","uuids":["node2-left","node4-bottom"]}],"dataList":[{"mainTitle":"申请人","title":"zhjm","id":"node0","top":499082,"left":498874,"shape":"circle"},{"mainTitle":"申请人1","title":"zhjm2","id":"node1","top":499289,"left":499053,"shape":"rectangle"},{"mainTitle":"申请人","title":"zhjm1","id":"node2","top":499493,"left":499356,"shape":"diamond"},{"mainTitle":"申请人","title":"zhjm","id":"node3","top":499508,"left":499647,"shape":"circle"},{"mainTitle":"申请人","title":"zhjm","id":"node4","top":499434,"left":498714,"shape":"rectangle"},{"mainTitle":"申请人","title":"zhjm","id":"node5","top":499081,"left":499563,"shape":"circle"},{"mainTitle":"申请人","title":"zhjm","id":"node6","top":499052,"left":498631,"shape":"diamond"}],"top":-498858,"left":-498440,"activeNode":"node0"}')
+  mounted() {    
+    this.root = JSON.parse('{ "edgesList": [ { "id": "con_85", "sourceId": "node0", "targetId": "node1", "label": "", "uuids": [ "node0-right", "node1-left" ] }, { "id": "con_87", "sourceId": "node0", "targetId": "node1", "label": "333", "uuids": [ "node0-top", "node1-top" ] }, { "id": "con_89", "sourceId": "node0", "targetId": "node1", "label": "", "uuids": [ "node0-bottom", "node1-bottom" ] }, { "id": "con_91", "sourceId": "node2", "targetId": "node1", "label": "333", "uuids": [ "node2-top", "node1-right" ] }, { "id": "con_93", "sourceId": "node3", "targetId": "node2", "label": "", "uuids": [ "node3-left", "node2-right" ] }, { "id": "con_95", "sourceId": "node4", "targetId": "node0", "label": "111", "uuids": [ "node4-top", "node0-left" ] }, { "id": "con_97", "sourceId": "node5", "targetId": "node3", "label": "", "uuids": [ "node5-bottom", "node3-top" ] }, { "id": "con_99", "sourceId": "node6", "targetId": "node3", "label": "", "uuids": [ "node6-top", "node3-right" ] }, { "id": "con_101", "sourceId": "node6", "targetId": "node3", "label": "", "uuids": [ "node6-left", "node3-bottom" ] }, { "id": "con_103", "sourceId": "node2", "targetId": "node4", "label": "", "uuids": [ "node2-left", "node4-bottom" ] } ], "dataList": [ { "mainTitle": "申请人", "title": "zhjm", "id": "node0", "top": 499082, "left": 498874, "shape": "circle" }, { "mainTitle": "申请人1", "title": "zhjm2", "id": "node1", "top": 499252, "left": 499091, "shape": "rectangle" }, { "mainTitle": "申请人", "title": "zhjm1", "id": "node2", "top": 499493, "left": 499356, "shape": "diamond" }, { "mainTitle": "申请人", "title": "zhjm", "id": "node3", "top": 499508, "left": 499647, "shape": "circle" }, { "mainTitle": "申请人", "title": "zhjm", "id": "node4", "top": 499434, "left": 498714, "shape": "rectangle" }, { "mainTitle": "申请人", "title": "zhjm", "id": "node5", "top": 499081, "left": 499563, "shape": "circle" }, { "mainTitle": "申请人", "title": "zhjm", "id": "node6", "top": 499052, "left": 498631, "shape": "diamond" } ], "top": -498959, "left": -498559, "activeNode": "node0" }')
     this.$nextTick(() => {      
       this.$refs.content.style.cssText = "left:" + this.root.left +"px; top:" + this.root.top + "px"
       console.log('---------------init')
@@ -130,6 +116,7 @@ export default {
   },
   methods: {
     init() {
+      console.log('------------>init')
       // 初始化界面
       const me = this     
       this.jsPlumbObj = window.jsPlumb.getInstance()
@@ -153,7 +140,7 @@ export default {
       })
       this.jsPlumbObj.bind('connection', (connInfo, originalEvent) => {        
         me.jsPlumbObj.bind('click', (conn, event) => {
-          me.$refs.edge.focus()          
+          me.$refs.edge.focus()
           me.edge.label = conn.getOverlay("label").label
           me.edge.connInfo = conn.getOverlay("label")
         })
@@ -177,7 +164,7 @@ export default {
           })
           if (!item.label) {
             connection.getOverlay("label").canvas.hidden = true
-          } else {
+          } else {            
             connection.getOverlay("label").canvas.className = "jtk-overlay edge-label"
             connection.getOverlay("label").setLabel(item.label)            
           }        
@@ -266,13 +253,13 @@ export default {
       // 编辑线上的label
       if (this.edge.connInfo) {
         this.edge.connInfo.setLabel(this.edge.label)
-        console.log(this.edge.connInfo)
         if (this.edge.label) {
           this.edge.connInfo.canvas.className = "jtk-overlay edge-label"
+          this.edge.connInfo.canvas.hidden = false
         } else {
           this.edge.connInfo.canvas.className = "jtk-overlay"
         }
-      }      
+      }
     },
     save(type) {      
       if(type === 'json') {
@@ -311,48 +298,54 @@ export default {
     },
     getImg () {
       // 导出png
-      console.log(this)
-      // console.log(this.$jsplumb)
-      // console.log(this.$canvg)
-      // console.log(this.$h2canv)
-      // if (typeof this.$h2canv !== 'undefined') {
-      //   // 以下是对svg的处理
-      //   const nodesToRecover = []
-      //   const nodesToRemove = []
-      //   const svgElem = Array.prototype.slice.call(document.getElementById('content-box').getElementsByTagName('svg'))
-      //   svgElem.map((node) => {
-      //     const parentNode = node.parentNode
-      //     const svg = node.outerHTML.trim()          
-      //     const canvas = document.createElement('canvas')
-      //     this.$canvg(canvas, svg)      
-      //     if (node.style.position) {
-      //       canvas.style.position += node.style.position
-      //       canvas.style.left += node.style.left
-      //       canvas.style.top += node.style.top
-      //     }          
-      //     nodesToRecover.push({
-      //       parent: parentNode,
-      //       child: node
-      //     });
-      //     parentNode.removeChild(node);
-      //     nodesToRemove.push({
-      //       parent: parentNode,
-      //       child: canvas
-      //     });
-      //     parentNode.appendChild(canvas);
-      //   })                
-      //   // const drawDom = this.$refs['content-box']
-      //   this.$h2canv(document.querySelector("#content-box")).then(canvas => {          
-      //     const imgUrl = canvas.toDataURL()          
-      //     this.outputData.type = 'img'
-      //     this.outputData.data = imgUrl
-      //   })
-      // }
+      if (typeof window.html2canvas !== 'undefined') {
+        // 以下是对svg的处理
+        const nodesToRecover = []
+        const nodesToRemove = []
+        const svgElem = Array.prototype.slice.call(document.getElementById('content-box').getElementsByTagName('svg'))
+        svgElem.map((node) => {
+          const parentNode = node.parentNode
+          const svg = node.outerHTML.trim()          
+          const canvas = document.createElement('canvas')
+          window.canvg(canvas, svg)      
+          if (node.style.position) {
+            canvas.style.position += node.style.position
+            canvas.style.left += node.style.left
+            canvas.style.top += node.style.top
+          }          
+          nodesToRecover.push({
+            parent: parentNode,
+            child: node
+          });
+          parentNode.removeChild(node);
+          nodesToRemove.push({
+            parent: parentNode,
+            child: canvas
+          });
+          parentNode.appendChild(canvas);
+        })                
+        // const drawDom = this.$refs['content-box']
+        window.html2canvas(document.querySelector("#content-box")).then(canvas => {          
+          const imgUrl = canvas.toDataURL()          
+          this.outputData.type = 'img'
+          this.outputData.data = imgUrl
+        })
+      }
     },
     closeOutput() {
       this.outputShow = false
       if (this.outputData.type === 'img') {
-        location.reload()
+        // 重置流程图
+        this.contentBoxShow = false
+        const me = this
+        this.$nextTick(() => {
+          me.contentBoxShow = true
+          me.$nextTick(() => {
+            this.$refs.content.style.cssText = "left:" + this.root.left +"px; top:" + this.root.top + "px"
+            console.log('---------------init')
+            window.jsPlumb.ready(this.init)
+          })
+        })
       }      
     },
     saveOutput() {
@@ -401,7 +394,7 @@ export default {
   top: -500000px
   height 1000000px
   width 1000000px
-  cursor move
+  // cursor move
 }
 .aside{
   height: 100vh;
@@ -411,7 +404,7 @@ export default {
   height: 50px;
 }
 .card-container{
-  cursor pointer
+  // cursor pointer
   position: absolute
   // position: relative
   text-align center  

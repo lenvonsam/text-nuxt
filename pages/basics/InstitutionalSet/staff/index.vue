@@ -209,9 +209,7 @@ erplr-panel(:right-padding="false")
             this.rowDel() 
             break
           case 'refresh':
-            this.loadData().then(() => {
-              this.$message.success('刷新成功')
-            })
+            this.$refs.search.searchHandler()
             break
         }
       },
