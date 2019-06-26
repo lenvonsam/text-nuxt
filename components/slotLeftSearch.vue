@@ -1,7 +1,7 @@
 <template lang="pug">
 .content
   .padding.bg-container 查询
-  el-form(inline, :model="formItem.model", ref="searchForm", :label-width="'70px'")
+  el-form.ft-12(inline, :model="formItem.model", ref="searchForm", :label-width="'80px'")
     el-form-item.mb-10.mr-5.ml-5(:label="item.lbl", v-for="item in formItem.form", :key="item.prop", clearable)
       el-input(size="small", v-model="formItem.model[item.prop]")
     el-form-item.full-width.text-center

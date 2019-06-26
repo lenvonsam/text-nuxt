@@ -35,7 +35,7 @@ export default {
 
   .left-panel {
     border-right: 1px solid #ddd;
-    width: 280px;
+    width: 280px!important;
     position: relative;
     transition: all 0.5s;
 
@@ -51,6 +51,7 @@ export default {
   .right-panel {
     position: relative;
     overflow: hidden;
+    background: #f6f6f6
 
     .dot {
       position: absolute;
@@ -60,17 +61,17 @@ export default {
       border-top-right-radius: 8px;
       border-bottom-right-radius: 8px;
       left: 0;
-      background: #ddd;
+      background: #32C8A3;
       z-index: 100;
 
       &:hover {
         cursor: pointer;
-        background: #888;
+        background: #F17060;
       }
     }
 
     .erp-content {
-      padding: 15px;
+      padding:15px;
     }
   }
 }

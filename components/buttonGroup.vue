@@ -2,8 +2,8 @@
   el-button-group
     template(v-for="(btn,idx) in actionBtns")
       excel-upload.float-left(v-if="btn.type == 'excel'", :dataType="btn.dataType", @uploadSuccess="fileUploadSuccess")
-        el-button(:icon="btn.icon", size="small") {{btn.lbl}}
-      el-button(:icon="btn.icon", :type="getBtnClass(btn, idx)", size="small", @click="btnGroupClick(btn.type)", v-else) {{btn.lbl}}
+        el-button(size="small") {{btn.lbl}}
+      el-button(:type="getBtnClass(btn, idx)", size="small", @click="btnGroupClick(btn.type)", v-else) {{btn.lbl}}
 </template>
 
 <script>

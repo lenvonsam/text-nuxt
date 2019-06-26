@@ -20,13 +20,10 @@
               :width="head.width ? head.width : 'auto'",
               :prop="head.prop")
               template(slot-scope="scope")
-                .row.tab-row
-                  template(v-for="(btn, index) in head.actionBtns", v-if="canShowRowBtn(btn.type, scope, btn.lbl) && scope.row['actionBtns']")                 
-                    .row-button(v-if="scope.row['actionBtns'][index] || btn.lbl", :class="btn.class ? btn.class : 'default'", @click="handerRowBtn(scope.$index, scope.row, btn.type)") {{scope.row['actionBtns'][index] ? scope.row['actionBtns'][index] : btn.lbl}}
-                    //- el-button(size="mini", type="text", v-if="scope.row['actionBtns'][index] || btn.lbl", :class="btn.class ? btn.class : 'default'", @click="handerRowBtn(scope.$index, scope.row, btn.type)") {{scope.row['actionBtns'][index] ? scope.row['actionBtns'][index] : btn.lbl}}
-                  template(v-else-if="canShowRowBtn(btn.type, scope, btn.lbl)")                             
-                    .row-button(:class="btn.class ? btn.class : 'default'", @click="handerRowBtn(scope.$index, scope.row, btn.type)") {{scope.row.btnLbl ? scope.row.btnLbl : btn.lbl}}
-                    //- el-button(size="mini", type="text", :class="btn.class ? btn.class : 'default'", @click="handerRowBtn(scope.$index, scope.row, btn.type)") {{scope.row.btnLbl ? scope.row.btnLbl : btn.lbl}}
+                template(v-for="(btn, index) in head.actionBtns", v-if="canShowRowBtn(btn.type, scope, btn.lbl) && scope.row['actionBtns']")                  
+                  el-button(type="text", v-if="scope.row['actionBtns'][index] || btn.lbl", :class="btn.class ? btn.class : 'default'", @click="handerRowBtn(scope.$index, scope.row, btn.type)") {{scope.row['actionBtns'][index] ? scope.row['actionBtns'][index] : btn.lbl}}
+                template(v-else-if="canShowRowBtn(btn.type, scope, btn.lbl)")                             
+                  el-button(type="text", :class="btn.class ? btn.class : 'default'", @click="handerRowBtn(scope.$index, scope.row, btn.type)") {{scope.row.btnLbl ? scope.row.btnLbl : btn.lbl}}
           template(v-else)
             elx-table-column(show-overflow-tooltip, 
               :formatter="head.formatter ? head.formatter : null", 
@@ -34,6 +31,8 @@
               :width="head.width ? head.width : ''", 
               :min-width="head.minWidth? head.minWidth : ''", 
               :label="head.lbl")
+    //- .mt-5.text-right
+      el-pagination(background, layout="prev, pager, next, jumper", :total="pgTotal", :page-size="pageSize", :current-page="currentPage", @current-change="pgChange")
     .padding.text-right.row(v-if="tableValue.page ? tableValue.page : true")
       .col
         el-pagination(:current-page="currentPage", :page-size="pageSize", background, layout="prev, pager, next, jumper", :total="total", @current-change="pgChange")
@@ -148,14 +147,6 @@ export default {
 <style scoped>
 .row{
   align-items: center;
-}
-.row-button{
-  padding: 0 3px;
-  margin: 0 2px;  
-  cursor: pointer;
-}
-.tab-row{
-  justify-content: space-around;
 }
 </style>
 
