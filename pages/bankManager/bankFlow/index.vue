@@ -1,7 +1,9 @@
 <template lang="pug">
 erplr-panel(:right-padding="false")
   div(slot="left")
-    left-search(:formItem="this.activeTab === 'abc' ? hxSearchFormItems : hxSearchFormItems", :searchEvent="searchForm", ref="search", :labelWidth="'90px'")
+    el-collapse(accordion, v-model="collapseName")
+      el-collapse-item.slot-left(title="查询", name="1")
+        left-search(:formItem="this.activeTab === 'abc' ? hxSearchFormItems : hxSearchFormItems", :searchEvent="searchForm", ref="search", :labelWidth="'90px'")
   .erp-content(slot="right")
     el-tabs(v-model="activeTab", type="border-card", @tab-click="handleTabHandler")
       el-tab-pane(label="农行", name="abc")
@@ -37,6 +39,7 @@ erplr-panel(:right-padding="false")
     },
     data () {
       return {
+        collapseName: ['1'],
         activeTab: 'abc',    
         tabloading: true,
         searchFormItems: [          

@@ -24,10 +24,21 @@ no-ssr
                   span {{sub.title}}
     .right-part
       .topbar
-        .relative
+        //- .relative
           el-tabs.top-tab(v-model="topActiveKey")
             el-tab-pane(v-for="p in topPanes", :label="p.title", :name="p.key", :key="p.key")
           el-button.no-border.float-right(size="medium", icon="logout", style="position: absolute; top: 3px; right: 0px;") 退出
+        .relative
+          el-tabs.top-tab(v-model="topActiveKey")
+            el-tab-pane(v-for="p in topPanes", :label="p.title", :name="p.key", :key="p.key")   
+          .right-box
+            .row
+              el-dropdown(size="small")
+                .avatar-box(:style="{background: 'url(https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg) no-repeat center', backgroundSize: 'cover'}")              
+                el-dropdown-menu(slot="dropdown")
+                  el-dropdown-item zhjm
+                  el-dropdown-item(icon="logout") 退出
+              .ft-14.pl-10 郑家敏
         el-tabs.bottom-tab(v-model="activeKey", type="card", closable, @edit="onEdit", style="position: relative", @tab-click="tabClick")
           el-tab-pane(v-for="p in panes", :label="p.title", :name="p.path", :key="p.path")
       .content
@@ -134,4 +145,21 @@ export default {
 
 <style lang="stylus">
 @import '../assets/stylus/common';
+.avatar-box{
+  width 30px
+  height 30px
+  border 1px #f2f2f2 solid 
+  border-radius 100%
+  overflow hidden  
+}
+.right-box{
+  position absolute
+  right 15px
+  top 8px
+  bottom 0
+}
+.right-box .row{
+  // align-content center
+  align-items: center
+}
 </style>

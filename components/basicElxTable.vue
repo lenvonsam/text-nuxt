@@ -20,10 +20,13 @@
               :width="head.width ? head.width : 'auto'",
               :prop="head.prop")
               template(slot-scope="scope")
-                template(v-for="(btn, index) in head.actionBtns", v-if="canShowRowBtn(btn.type, scope, btn.lbl) && scope.row['actionBtns']")                  
-                  el-button(type="text", v-if="scope.row['actionBtns'][index] || btn.lbl", :class="btn.class ? btn.class : 'default'", @click="handerRowBtn(scope.$index, scope.row, btn.type)") {{scope.row['actionBtns'][index] ? scope.row['actionBtns'][index] : btn.lbl}}
-                template(v-else-if="canShowRowBtn(btn.type, scope, btn.lbl)")                             
-                  el-button(type="text", :class="btn.class ? btn.class : 'default'", @click="handerRowBtn(scope.$index, scope.row, btn.type)") {{scope.row.btnLbl ? scope.row.btnLbl : btn.lbl}}
+                .row.tab-row
+                  template(v-for="(btn, index) in head.actionBtns", v-if="canShowRowBtn(btn.type, scope, btn.lbl) && scope.row['actionBtns']")                  
+                    .row-button(v-if="scope.row['actionBtns'][index] || btn.lbl", :class="btn.class ? btn.class : 'default'", @click="handerRowBtn(scope.$index, scope.row, btn.type)") {{scope.row['actionBtns'][index] ? scope.row['actionBtns'][index] : btn.lbl}}
+                    //- el-button(type="text", v-if="scope.row['actionBtns'][index] || btn.lbl", :class="btn.class ? btn.class : 'default'", @click="handerRowBtn(scope.$index, scope.row, btn.type)") {{scope.row['actionBtns'][index] ? scope.row['actionBtns'][index] : btn.lbl}}
+                  template(v-else-if="canShowRowBtn(btn.type, scope, btn.lbl)")                             
+                    .row-button(:class="btn.class ? btn.class : 'default'", @click="handerRowBtn(scope.$index, scope.row, btn.type)") {{scope.row.btnLbl ? scope.row.btnLbl : btn.lbl}}
+                    //- el-button(type="text", :class="btn.class ? btn.class : 'default'", @click="handerRowBtn(scope.$index, scope.row, btn.type)") {{scope.row.btnLbl ? scope.row.btnLbl : btn.lbl}}
           template(v-else)
             elx-table-column(show-overflow-tooltip, 
               :formatter="head.formatter ? head.formatter : null", 
@@ -31,16 +34,22 @@
               :width="head.width ? head.width : ''", 
               :min-width="head.minWidth? head.minWidth : ''", 
               :label="head.lbl")
+    pageination(:total="pgTotal", :pageSize="pageSize", :currentPage="currentPage", @current-change="pgChange")
     //- .mt-5.text-right
       el-pagination(background, layout="prev, pager, next, jumper", :total="pgTotal", :page-size="pageSize", :current-page="currentPage", @current-change="pgChange")
-    .padding.text-right.row(v-if="tableValue.page ? tableValue.page : true")
-      .col
-        el-pagination(:current-page="currentPage", :page-size="pageSize", background, layout="prev, pager, next, jumper", :total="total", @current-change="pgChange")
-      span(style="padding-bottom: 3px;") 共 {{total}} 条数据
+    //- .padding.text-right.row(v-if="tableValue.page ? tableValue.page : true")
+    //-   .col
+    //-     el-pagination(:current-page="currentPage", :page-size="pageSize", background, layout="prev, pager, next, jumper", :total="total", @current-change="pgChange")
+    //-   span(style="padding-bottom: 3px;") 共 {{total}} 条数据
+      
 </template>
 
 <script>
+import pageination from '@/components/pagination'
 export default {
+  components: {
+    pageination
+  },
   props: {
     loading: {
       type: Boolean,
@@ -102,10 +111,9 @@ export default {
   beforeMount() {
     console.log('total:>>', this.total)
     this.pgTotal = this.total    
-    this.tableHeight = (window.innerHeight - 250) + 'px'
-    // this.tableHeight = (50 * this.pageSize) + 'px'
+    this.tableHeight = (window.innerHeight - 195) + 'px'
     window.addEventListener('resize', () => {
-      this.tableHeight = (window.innerHeight - 250) + 'px'
+      this.tableHeight = (window.innerHeight - 195) + 'px'
     }) 
   },
   methods: {
@@ -147,6 +155,14 @@ export default {
 <style scoped>
 .row{
   align-items: center;
+}
+.row-button{
+  padding: 0 3px;
+  margin: 0 2px;  
+  cursor: pointer;
+}
+.tab-row{
+  justify-content: space-around;
 }
 </style>
 

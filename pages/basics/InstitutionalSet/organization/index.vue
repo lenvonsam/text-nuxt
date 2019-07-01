@@ -1,8 +1,11 @@
 <template lang="pug">
 erplr-panel(:right-padding="false")
   div(slot="left")
-    .padding.bg-container 组织机构
-    el-tree(:data="treeData", :props="defaultProps", @node-click="handleNodeClick")    
+    el-collapse(accordion, v-model="collapseName")
+      el-collapse-item.slot-left(title="公司组织", name="1")
+        left-tree(ref="leftTree", :button="treeButton", :data="treeData", :props="defaultProps", @nodeClick="treeNodeClick", @addEvent="addOrgHandler", @editEvent="editOrgHandler", @delEvent="delOrgHandler")
+      el-collapse-item.slot-left(title="查询", name="2")
+        left-search(:formItem="searchFormItems", :searchEvent="searchForm", ref="search")
   .erp-content(slot="right")
     button-group(:btns="buttonGroupInfo", @groupBtnClick="buttonGroupClick")
     basic-elx-table(
@@ -36,23 +39,43 @@ erplr-panel(:right-padding="false")
       .dialog-footer(slot="footer")
         el-button(@click="dialogHandler('cancel')", size="small") 取消
         el-button(@click="dialogHandler('sure')", type="primary", size="small") 确定
+    org-dialog(:title="leftOrgTitle", :dialogShow="leftOrgDialog", @close="leftOrgDialog = false", @save="leftOrgSave", v-if="leftOrgDialog")
 </template>
 
 <script>  
   import { mapState } from 'vuex'
   import buttonGroup from '~/components/buttonGroup.vue'  
   import erplrPanel from '~/components/erplrPanel'
-  import basicElxTable from '~/components/basicElxTable'  
+  import basicElxTable from '~/components/basicElxTable'
+  import leftTree from '@/components/leftTree'
+  import orgDialog from './orgDialog'
+  import leftSearch from '~/components/leftSearch'  
   export default {
     layout: 'backend',
     components: {      
       basicElxTable,
       erplrPanel,
-      buttonGroup
+      buttonGroup,
+      leftTree,
+      orgDialog,
+      leftSearch
     },
     data () {
       return {
-        treeData: [{label: '一级 1', children: [{label: '二级 1-1'},{label: '二级 1-2'},{label: '二级 1-3'}]}],
+        treeButton: [
+          {type: 'add', label: '新增', icon: 'el-icon-document-add'}, 
+          {type: 'edit', label: '编辑', icon: 'el-icon-edit'},
+          {type: 'del', label: '删除', icon: 'el-icon-delete'}
+        ],
+        collapseName: ['1'],
+        searchFormItems: [
+          {lbl: '机构代码', prop: 'orgCode', val: '', placeholder:'请输入机构代码'},
+          {lbl: '机构名称', prop: 'orgName', val: '', placeholder:'请输入机构名称'},
+          {lbl: '机构简称', prop: 'deptCode', val: '', placeholder:'请输入机构简称'}
+        ],
+        leftOrgDialog: false,
+        leftOrgTitle: '新增组织',
+        treeData: [{label: '集团', children: [{label: '型云'},{label: '型升'},{label: '岳洋通'},{label: '智恒达'}]}],
         defaultProps: {
           children: 'children',
           label: 'label'
@@ -89,7 +112,6 @@ erplr-panel(:right-padding="false")
             {lbl: '开户银行', prop: 'orgBankname'},
             {lbl: '税号', prop: 'orgTanu'},
             {lbl: '地址', prop: 'orgAddr'},
-            {lbl: '账号', prop: 'orgAccounts'},
             {lbl: '备注', prop: 'orgRemark'},
             {type: 'action', width: '100px', fixed: 'right', actionBtns: [
                 {lbl: '修改', type: 'edit'}, 
@@ -110,7 +132,8 @@ erplr-panel(:right-padding="false")
         smsTemplate: {},
         copySmsTemplate: {},
         dialogTitle: '新增机构',
-        tableSelect: []
+        tableSelect: [],
+        checkNode: {}
       }
     },
     computed: {
@@ -133,6 +156,47 @@ erplr-panel(:right-padding="false")
       })
     },
     methods: {
+      searchForm (values) {
+        for (const key in values) {
+          this.queryObject[key] = values[key]
+          if (!this.queryObject[key]) {
+            delete this.queryObject[key]
+          }
+        }
+        this.loadData()       
+      },
+      treeNodeClick (obj) {
+        console.log(obj)
+        this.checkNode = obj
+      },
+      leftOrgSave (data) {
+        console.log(this.$refs.leftTree.$refs.tree)
+        // let newNodeId = null
+        // if (!this.checkNode.node) {
+        //   newNodeId = this.$refs.leftTree.data[0].$treeNodeId
+        // } else {
+        //   newNodeId = this.checkNode.node.id++
+        //   if (!this.checkNode.data.children) {
+        //     this.$set(this.checkNode.data, 'children', [])
+        //   }
+        // }        
+        // const newChild = {
+        //   id: newNodeId,
+        //   label: data.orgName,
+        //   children: []
+        // }        
+        // this.checkNode.data.children.push(newChild)
+        // this.leftOrgDialog = false
+      },
+      addOrgHandler () {
+        console.log('---------add')
+        this.leftOrgDialog = true
+      },
+      editOrgHandler () {
+        this.leftOrgTitle = '编辑组织'
+        this.leftOrgDialog = true
+      },
+      delOrgHandler () {},
       rowSelection (row) {
         this.tableSelect = row
       },
@@ -212,8 +276,7 @@ erplr-panel(:right-padding="false")
           console.log(params)
           this.delete(params)
         })
-      },
-      handleNodeClick () {},
+      },      
       async loadData () {
         try {
           const { data } = await this.proxy(this, 'basic-server/v1/basicInfo/org', 'get', this.queryObject)

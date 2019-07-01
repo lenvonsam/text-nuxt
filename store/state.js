@@ -488,6 +488,24 @@ export default {
       }, {
         title: '员工设置',
         path: '/basics/InstitutionalSet/staff'
+      }, {
+        title: '仓库设置',
+        path: '/basics/warehouse/warehouseSet'
+      }, {
+        title: '库区设置',
+        path: '/basics/warehouse/distinguish'
+      }, {
+        title: '库位设置',
+        path: '/basics/warehouse/variablesSet'
+      }, {
+        title: '品名设置',
+        path: '/basics/warehouse/productNameSet'
+      }, {
+        title: '产地设置',
+        path: '/basics/warehouse/originSet'
+      }, {
+        title: '物资代码',
+        path: '/basics/warehouse/goodsCode'
       }]
     }, {
       title: '消息管理',

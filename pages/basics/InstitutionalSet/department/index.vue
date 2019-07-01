@@ -1,7 +1,9 @@
 <template lang="pug">
 erplr-panel(:right-padding="false")
   div(slot="left")
-    left-search(:formItem="searchFormItems", :searchEvent="searchForm", ref="search")
+    el-collapse(accordion, v-model="collapseName")
+      el-collapse-item.slot-left(title="查询", name="1")
+        left-search(:formItem="searchFormItems", :searchEvent="searchForm", ref="search")
   .erp-content(slot="right")
     button-group(:btns="buttonGroupInfo", @groupBtnClick="buttonGroupClick")
     basic-elx-table(
@@ -41,6 +43,7 @@ erplr-panel(:right-padding="false")
     },
     data () {
       return {
+        collapseName: ['1'],
         buttonGroupInfo: [
           {lbl: '新增', type: 'add', icon: 'el-icon-plus'},
           {lbl: '修改', type: 'edit', icon: 'el-icon-edit'},

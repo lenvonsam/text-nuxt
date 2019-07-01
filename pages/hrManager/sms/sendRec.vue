@@ -1,7 +1,9 @@
 <template lang="pug">
 erplr-panel(:right-padding="false")
   div(slot="left")
-    left-search(:formItem="searchFormItems", :labelWidth="'90px'",  :searchEvent="searchForm", ref="search")
+    el-collapse(accordion, v-model="collapseName")
+      el-collapse-item.slot-left(title="查询", name="1")
+        left-search(:formItem="searchFormItems", :labelWidth="'90px'",  :searchEvent="searchForm", ref="search")
   .erp-content(slot="right")
     button-group(:btns="buttonGroupInfo", @groupBtnClick="buttonGroupClick")
     basic-elx-table(
@@ -29,6 +31,7 @@ erplr-panel(:right-padding="false")
     },
     data () {
       return {
+        collapseName: ['1'],
         buttonGroupInfo: [
           {lbl: '刷新', type: 'refresh', icon: 'el-icon-refresh'}
         ],                     

@@ -16,21 +16,10 @@ erplr-panel(:right-padding="false")
       @tableRowDel="rowDel",
       @rowSelection="rowSelection")
     el-dialog(ref="dialog", :title="dialogTitle", :visible="dialogShow",  width="800px", @close="dialogHandler('cancel')")
-      el-form(v-if="dialogShow", ref="dialogForm", :rules="rules", :model="smsTemplate", label-width="90px")
-        el-form-item(v-for="item in editForm", :label="item.lbl", :key="item.prop", :prop="item.rules ? item.prop : null")
+      el-form(v-if="dialogShow", ref="dialogForm", :model="smsTemplate", label-width="70px")
+        el-form-item(v-for="item in editForm", :label="item.lbl", :key="item.prop")
           template(v-if="item.type === 'textarea'")
-            el-input(type="textarea", :rows="2", placeholder="请输入内容", v-model="smsTemplate[item.prop]", size="small")
-          template(v-else-if="item.type === 'select'")
-            el-select.full-width(
-              v-model="smsTemplate[item.prop]", 
-              :multiple="item.select.multiple ? item.select.multiple : false", 
-              :filterable="item.select.filterable",
-              :reserve-keyword="item.select.reserveKeyword",
-              :placeholder="item.placeholder"
-              :remote-method="item.select.remoteMethod",
-              size="small"
-            )
-              el-option(v-for="obj in item.select.list", :key="obj[item.select.labelProp]", :label="obj[item.select.labelProp]", :value="obj[item.select.labelProp]")
+            el-input(type="textarea", :rows="2", placeholder="请输入内容", v-model="smsTemplate[item.prop]", size="small")          
           template(v-else)
             el-input.full-width(v-model="smsTemplate[item.prop]", clearable, size="small", :placeholder="item.placeholder")
       .dialog-footer(slot="footer")
@@ -62,32 +51,38 @@ erplr-panel(:right-padding="false")
           {lbl: '刷新', type: 'refresh', icon: 'el-icon-refresh'}
         ],
         editForm: [
-          {lbl: '模板分组', prop: 'groupName', rules: true, placeholder: '请选择模板分组', select: {
-            list: [],
-            filterable: true,            
-            labelProp: 'name',
-            valueProp: 'id'
-          }, type: 'select'},
-          {lbl: '模板名称', prop: 'name', rules: true, placeholder: '请输入模板名称'},
-          {lbl: '模板内容', prop: 'content', rules: true, type: 'textarea', placeholder: '请输入模板内容'}
-        ], 
-        rules: {
-          groupName: [{ required: true, message: '请选择模板分组', trigger: 'change' }],
-          name: [{ required: true, message: '请输入模板名称', trigger: 'change' }],
-          content: [{ required: true, message: '模板内容', trigger: 'change' }]
-        },           
+          {lbl: '仓库名称', prop: 'deptName'},
+          {lbl: '助记码', prop: 'deptManager'},
+          {lbl: '仓库类型', prop: 'deptRemark', type: 'select', list: []},
+          {lbl: '地区', prop: 'deptManager'},
+          {lbl: '联系人', prop: 'deptManager'},
+          {lbl: '电话', prop: 'deptManager'},
+          {lbl: '手机', prop: 'deptManager'},
+          {lbl: '地址', prop: 'deptManager'},
+          {lbl: '备注', prop: 'deptManager'},
+        ],              
         searchFormItems: [
-          {lbl: '模板分组', prop: 'groupId', val: '', type: 'select', lblProp: 'name', valProp: 'id', placeholder:'请输入模板分组', list: []},
-          {lbl: '模板名称', prop: 'name', val: '', placeholder:'请输入模板名称'},
-          {lbl: '模板内容', prop: 'content', val: '', placeholder:'请输入模板内容'}
+          {lbl: '仓库', prop: 'deptName', val: '', placeholder:'请输入部门名称'},
+          {lbl: '仓库名称', prop: 'deptName', val: '', placeholder:'请输入部门名称'},
+          {lbl: '地区', prop: 'deptCode', val: '', placeholder:'请输入地区'}
         ],        
         tableValue: {          
           hasCbx: true,
           showRowIndex: true,
           tableHead: [
-            {lbl: '模板分组', prop: 'groupName', width: '100px'},
-            {lbl: '模板名称', prop: 'name', width: '100px'},
-            {lbl: '模板内容', prop: 'content'}, 
+            {lbl: '仓库名称', prop: 'deptCode', width: '100px'},
+            {lbl: '仓库代码', prop: 'deptName', width: '100px'},
+            {lbl: '助记码', prop: 'deptManager'}, 
+            {lbl: '仓库类型', prop: 'deptRemark'}, 
+            {lbl: '自有监管库', prop: 'deptRemark', width: '120px'}, 
+            {lbl: '接口', prop: 'deptRemark'}, 
+            {lbl: '库位', prop: 'deptRemark'}, 
+            {lbl: '地区', prop: 'deptRemark'}, 
+            {lbl: '联系人', prop: 'deptRemark'}, 
+            {lbl: '电话', prop: 'deptRemark'}, 
+            {lbl: '手机', prop: 'deptRemark'}, 
+            {lbl: '地址', prop: 'deptRemark'}, 
+            {lbl: '备注', prop: 'deptRemark'}, 
             {type: 'action', width: '100px', fixed: 'right', actionBtns: [
                 {lbl: '修改', type: 'edit'}, 
                 {lbl: '删除', type: 'del'}
@@ -102,11 +97,11 @@ erplr-panel(:right-padding="false")
           currentPage: this.currentPage,
           pageSize: this.pageSize
         },
-        loading: false,
+        loading: true,
         dialogShow: false,
         smsTemplate: {groupName: '', groupId: '', name: '', content: ''},
         copySmsTemplate: {},
-        dialogTitle: '新增模板',
+        dialogTitle: '新增仓库',
         tableSelect: []
       }
     },
@@ -118,7 +113,7 @@ erplr-panel(:right-padding="false")
       })
     },
     created () {
-      this.getMsgTemplateGroup()
+      // this.getMsgTemplateGroup()
       this.copySmsTemplate = JSON.parse(JSON.stringify(this.smsTemplate))
     },
     mounted () {
@@ -142,7 +137,7 @@ erplr-panel(:right-padding="false")
       buttonGroupClick (type) {
         switch (type) {
           case 'add':
-            this.dialogTitle = '新增模板'
+            this.dialogTitle = '新增仓库'
             this.dialogShow = true
             break
           case 'edit':
@@ -197,7 +192,7 @@ erplr-panel(:right-padding="false")
         this.smsTemplate = JSON.parse(JSON.stringify(this.copySmsTemplate))      
       },
       rowEdit (row) {        
-        this.dialogTitle = '编辑模板'
+        this.dialogTitle = '编辑仓库'
         if (row) {
           this.smsTemplate = Object.assign({}, row)
         }
@@ -206,58 +201,39 @@ erplr-panel(:right-padding="false")
       rowDel (row) {
         this.confirmDialog(this, '您确认要删掉记录吗？').then(() => {
           const list = row ? [row] : this.tableSelect
-          let params = '/' + list[0].id
+          let params = '/' + list[0].deptId
           if (list.length > 1) {
             const spIds = []
             list.map((item) => {
-              spIds.push('id=' + item.id)
+              spIds.push('spIds[]=' + item.deptId)
             })
             const spIdsStr = spIds.toString().replace(/,/g, '&')
             params = '?' + encodeURI(spIdsStr)
           }
-          this.delete(params)   
+          console.log(params)
+          this.delete(params)
         })
       },
       async loadData () {
+        this.loading = true
         try {
-          const { data } = await this.proxy(this, 'extra-server/v1/msg_template', 'get', this.queryObject)
+          const { data } = await this.proxy(this, 'basic-server/v1/basicInfo/dpt', 'get', this.queryObject)
           if (data.return_code === 0) {
-            this.tableValue.tableData = data.data
-            this.tableValue.tableData.map((item) => {
-              if (!item.groupName) item.groupName = '--'
-            })
-            this.totalCount = data.total_page
+            if (this.searchFormItems[0].list.length === 0) {
+              this.searchFormItems[0].list = data.list
+            }            
+            this.tableValue.tableData = data.list
+            this.totalCount = data.total
           }
         } catch (e) {
           console.error(e)
         }
-      },
-      async getMsgTemplateGroup () {
-        try {
-          const { data } = await this.proxy(this, 'extra-server/v1/msg_template_group', 'get', {currentPage: 1, pageSize: 50})
-          console.log(data)
-          if (data.return_code === 0) {
-            // const arr = []
-            // data.data.map((item) => {
-            //   const obj = {
-            //     label: item.name,
-            //     value: item.id
-            //   }
-            //   arr.push(obj)
-            // })
-            this.editForm[0].select.list = data.data
-            this.searchFormItems[0].list = data.data
-            // console.log(this.searchFormItems[0].list)
-          }
-        } catch (e) {
-          console.error(e)
-        }
-      },
-      
+        this.loading = false
+      },      
       async createOrUpdate () {
         try {
-          const methods = this.smsTemplate.id ? 'put' : 'post'          
-          const { data } = await this.proxy(this, 'extra-server/v1/msg_template', methods, this.smsTemplate)
+          const methods = this.smsTemplate.deptId ? 'put' : 'post'          
+          const { data } = await this.proxy(this, 'basic-server/v1/basicInfo/dpt', methods, this.smsTemplate)
           if (data.return_code === 0) {            
             this.dialogShow = false
             this.msgShow(this, this.dialogTitle + '成功', 'success')
@@ -272,7 +248,7 @@ erplr-panel(:right-padding="false")
       },
       async delete (params) {
         try {          
-          const { data } = await this.proxy(this, 'extra-server/v1/msg_template'+ params, 'del')
+          const { data } = await this.proxy(this, 'basic-server/v1/basicInfo/dpt'+ params, 'del')
           if (data.return_code === 0) {
             this.dialogShow = false
             this.msgShow(this, '删除成功', 'success')
