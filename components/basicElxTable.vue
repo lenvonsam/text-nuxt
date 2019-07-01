@@ -34,7 +34,7 @@
               :width="head.width ? head.width : ''", 
               :min-width="head.minWidth? head.minWidth : ''", 
               :label="head.lbl")
-    pageination(:total="pgTotal", :pageSize="pageSize", :currentPage="currentPage", @current-change="pgChange")
+    pageination(:total="total", :pageSize="pageSize", :currentPage="currentPage", @current-change="pgChange")
     //- .mt-5.text-right
       el-pagination(background, layout="prev, pager, next, jumper", :total="pgTotal", :page-size="pageSize", :current-page="currentPage", @current-change="pgChange")
     //- .padding.text-right.row(v-if="tableValue.page ? tableValue.page : true")
@@ -102,18 +102,18 @@ export default {
       tableHeight: '500px'
     }
   },
-  watch: {
-    total(newVal, oldVal) {
-      console.log('total newval:>', newVal)
-      this.pgTotal = newVal
-    }
-  },
+  // watch: {
+  //   total(newVal, oldVal) {
+  //     console.log('total newval:>', newVal)
+  //     this.pgTotal = newVal
+  //   }
+  // },
   beforeMount() {
     console.log('total:>>', this.total)
     this.pgTotal = this.total    
-    this.tableHeight = (window.innerHeight - 195) + 'px'
+    this.tableHeight = (window.innerHeight - 210) + 'px'
     window.addEventListener('resize', () => {
-      this.tableHeight = (window.innerHeight - 195) + 'px'
+      this.tableHeight = (window.innerHeight - 210) + 'px'
     }) 
   },
   methods: {

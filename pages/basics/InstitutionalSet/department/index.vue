@@ -10,7 +10,7 @@ erplr-panel(:right-padding="false")
       :tableValue="tableValue",
       :total="totalCount",
       :currentPage="currentPage",
-      :pageSize="pageSize",     
+      :pageSize="5",     
       @paginateChange="tableChange",
       @tableRowEdit="rowEdit",
       @tableRowDel="rowDel",
@@ -104,7 +104,7 @@ erplr-panel(:right-padding="false")
       this.$nextTick(()=>{
         this.queryObject = {
           currentPage: this.currentPage,
-          pageSize: this.pageSize
+          pageSize: 5
         }
         this.loadData()
       })
