@@ -202,10 +202,7 @@ erplr-panel(:right-padding="false")
         this.loading = true
         try {
           const { data } = await this.proxy(this, 'basic-server/v1/basicInfo/dpt', 'get', this.queryObject)
-          if (data.return_code === 0) {
-            if (this.searchFormItems[0].list.length === 0) {
-              this.searchFormItems[0].list = data.list
-            }            
+          if (data.return_code === 0) {                       
             this.tableValue.tableData = data.list
             this.totalCount = data.total
           }

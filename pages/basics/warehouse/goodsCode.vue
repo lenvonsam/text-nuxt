@@ -62,10 +62,10 @@ erplr-panel(:right-padding="false")
         collapseName: ['1', '2'],
         searchFormItems: [
           {lbl: '品名大类', prop: 'orgAbbreviate', val: ''},
-          {lbl: '品名', prop: 'deptCode', val: ''},
-          {lbl: '材质', prop: 'deptCode', val: ''},
-          {lbl: '规格', prop: 'deptCode', val: ''},
-          {lbl: '产地', prop: 'deptCode', val: ''},
+          {lbl: '品名', prop: 'deptName', val: ''},
+          {lbl: '材质', prop: 'test1', val: ''},
+          {lbl: '规格', prop: 'test2', val: ''},
+          {lbl: '产地', prop: 'test3', val: ''},
         ],
         treeData: [{
           label: '品名大类', 

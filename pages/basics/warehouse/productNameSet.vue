@@ -62,7 +62,7 @@ erplr-panel(:right-padding="false")
         collapseName: ['1', '2'],
         searchFormItems: [
           {lbl: '代码', prop: 'orgCode', val: ''},
-          {lbl: '品名', prop: 'orgCode', val: ''}
+          {lbl: '品名', prop: 'orgName', val: ''}
         ],
         treeData: [{
           label: '品名大类', 

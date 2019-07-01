@@ -170,23 +170,23 @@ erplr-panel(:right-padding="false")
         this.checkNode = obj
       },
       leftOrgSave (data) {
-        console.log(this.$refs.leftTree.$refs.tree)
-        // let newNodeId = null
-        // if (!this.checkNode.node) {
-        //   newNodeId = this.$refs.leftTree.data[0].$treeNodeId
-        // } else {
-        //   newNodeId = this.checkNode.node.id++
-        //   if (!this.checkNode.data.children) {
-        //     this.$set(this.checkNode.data, 'children', [])
-        //   }
-        // }        
-        // const newChild = {
-        //   id: newNodeId,
-        //   label: data.orgName,
-        //   children: []
-        // }        
-        // this.checkNode.data.children.push(newChild)
-        // this.leftOrgDialog = false
+        // console.log(this.$refs.leftTree.$refs.tree)
+        let newNodeId = null
+        if (!this.checkNode.node) {
+          newNodeId = this.$refs.leftTree.data[0].$treeNodeId
+        } else {
+          newNodeId = this.checkNode.node.id++
+          if (!this.checkNode.data.children) {
+            this.$set(this.checkNode.data, 'children', [])
+          }
+        }        
+        const newChild = {
+          id: newNodeId,
+          label: data.orgName,
+          children: []
+        }        
+        this.checkNode.data.children.push(newChild)
+        this.leftOrgDialog = false
       },
       addOrgHandler () {
         console.log('---------add')

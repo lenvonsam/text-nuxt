@@ -3,7 +3,7 @@ no-ssr
   .server-container
     .sidebar(:class="{'collapse': collapse}")
       .side-wrap
-        .logo.row.text-white.flex-center(style="height: 56px;background:#409eff")
+        .logo.row.text-white.flex-center(style="height: 49px;background:#409eff")
           .col.pl-15(v-if="!collapse")
             h3.ft-16 智恒达供应链
           .text-center(@click="collapse = !collapse", style="flex: 0 0 64px")

@@ -62,8 +62,8 @@ erplr-panel(:right-padding="false")
           {lbl: '备注', prop: 'deptManager'},
         ],              
         searchFormItems: [
-          {lbl: '仓库', prop: 'deptName', val: '', placeholder:'请输入部门名称'},
-          {lbl: '仓库名称', prop: 'deptName', val: '', placeholder:'请输入部门名称'},
+          // {lbl: '仓库', prop: 'deptName', val: '', placeholder:'请输入部门名称'},
+          {lbl: '仓库名称', prop: 'deptName', val: ''},
           {lbl: '地区', prop: 'deptCode', val: '', placeholder:'请输入地区'}
         ],        
         tableValue: {          
@@ -218,10 +218,7 @@ erplr-panel(:right-padding="false")
         this.loading = true
         try {
           const { data } = await this.proxy(this, 'basic-server/v1/basicInfo/dpt', 'get', this.queryObject)
-          if (data.return_code === 0) {
-            if (this.searchFormItems[0].list.length === 0) {
-              this.searchFormItems[0].list = data.list
-            }            
+          if (data.return_code === 0) {        
             this.tableValue.tableData = data.list
             this.totalCount = data.total
           }
