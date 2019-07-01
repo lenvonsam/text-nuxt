@@ -54,9 +54,9 @@
 </template>
 <script>
   import { mapState } from 'vuex'
-  import basicTable from '~/components/basicTable.vue'
   import recipientAdd from './recipientAdd.vue'
-  import recipientHRAdd from './../../hrManager/sms/recipientAdd.vue'  
+  import basicTable from '~/components/basicTable.vue'
+  import recipientHRAdd from '~/pages/hrManager/sms/recipientAdd.vue'  
   export default {
     components: {
       basicTable,

@@ -23,9 +23,9 @@
 
 <script>
   import { mapState } from 'vuex'
+  import sendDetailList from './sendDetailList.vue'  
   import basicTable from '~/components/basicTable.vue'
   import searchForm from '~/components/searchForm.vue'
-  import sendDetailList from './sendDetailList.vue'  
   export default {
     layout: 'backend',
     components: {

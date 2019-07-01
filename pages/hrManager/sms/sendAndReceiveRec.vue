@@ -14,8 +14,8 @@
 // import breadcrumb from '@/components/Breadcrumb.vue'
 import { mapState } from 'vuex'
 import searchForm from '~/components/searchForm.vue'
-import sendRec from './../../callCenter/sms/sendRec.vue'
-import receiveRec from './../../callCenter/sms/receiveRec.vue'
+import sendRec from '~/pages/callCenter/sms/sendRec.vue'
+import receiveRec from '~/pages/callCenter/sms/receiveRec.vue'
 export default {
   layout: 'backend',
   components: {

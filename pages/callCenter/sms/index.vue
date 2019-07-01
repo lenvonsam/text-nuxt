@@ -7,9 +7,9 @@
 </template>
 
 <script>
+  import recipient from './recipient.vue'
   import breadcrumb from '~/components/breadcrumb.vue'
   import buttonGroup from '~/components/buttonGroup.vue'
-  import recipient from './recipient.vue'
   export default {
     // layout: 'backend',
     components: {

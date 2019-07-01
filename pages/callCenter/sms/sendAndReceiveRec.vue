@@ -13,10 +13,10 @@
 
 <script>
 import { mapState } from 'vuex'
-import breadcrumb from '~/components/breadcrumb.vue'
-import searchForm from '~/components/searchForm.vue'
 import sendRec from './sendRec.vue'
 import receiveRec from './receiveRec.vue'
+import breadcrumb from '~/components/breadcrumb.vue'
+import searchForm from '~/components/searchForm.vue'
 export default {
   layout: 'backend',
   components: {

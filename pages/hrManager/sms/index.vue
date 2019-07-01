@@ -10,7 +10,7 @@
 
 <script>
   import buttonGroup from '~/components/buttonGroup.vue'
-  import recipient from './../../callCenter/sms/recipient.vue'
+  import recipient from '~/pages/callCenter/sms/recipient.vue'
   export default {
     layout: 'backend',
     components: {

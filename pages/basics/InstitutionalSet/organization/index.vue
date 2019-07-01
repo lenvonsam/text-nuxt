@@ -44,11 +44,11 @@ erplr-panel(:right-padding="false")
 
 <script>  
   import { mapState } from 'vuex'
+  import orgDialog from './orgDialog'
   import buttonGroup from '~/components/buttonGroup.vue'  
   import erplrPanel from '~/components/erplrPanel'
   import basicElxTable from '~/components/basicElxTable'
   import leftTree from '@/components/leftTree'
-  import orgDialog from './orgDialog'
   import leftSearch from '~/components/leftSearch'  
   export default {
     layout: 'backend',
